@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>数据编辑页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+<body>
+<div class="x-body" id="app">
+    <form class="layui-form">
+ <div v-if="personDto">
+     <table border="2"  class="layui-table" >
+
+         <tr>
+             <td width="20" height="20"> 成员编号：</td>
+             <td width="200" height="20">
+                 {{personDto.perscode}}
+             </td>
+         </tr>
+         <tr>
+             <td>与户主关系：</td>
+             <td >
+                 {{personDto.relation}}
+             </td>
+         </tr>
+         <tr>
+             <td valign="top"> 姓名：</td>
+             <td >
+                 {{personDto.persname}}
+             </td>
+         </tr>
+         <tr>
+             <td>身份证号：</td>
+             <td >
+                 {{personDto.cardID}}
+             </td>
+         </tr>
+         <tr>
+             <td valign="top">农合证卡号：</td>
+             <td >
+                 {{personDto.ruralCard}}
+             </td>
+         </tr>
+         <tr>
+             <td>年龄:</td>
+             <td >
+                 {{personDto.age}}
+             </td>
+         </tr>
+         <tr>
+             <td valign="top">性别:</td>
+             <td  >
+                 {{personDto.sex}}
+             </td>
+         </tr>
+         <tr>
+             <td valign="top">出生日期:</td>
+             <td  >
+                 {{personDto.birthday}}
+             </td>
+         </tr>
+         <tr>
+             <td>职业:</td>
+             <td >
+                 {{personDto.occupation}}
+             </td>
+         </tr>
+         <tr>
+             <td>工作单位:</td>
+             <td >
+                 {{personDto.workUnit}}
+             </td>
+         </tr>
+         <tr>
+             <td>常住地址:</td>
+             <td >
+                 {{personDto.liveAddress}}
+             </td>
+         </tr>
+         <tr>
+             <td>联系电话:</td>
+             <td >
+                 {{personDto.telephone}}
+             </td>
+         </tr>
+
+
+     </table>
+
+
+
+        <div class="layui-form-item">
+            <button type="button" class="layui-btn layui-btn-danger" v-on:click="close" >关闭</button>
+        </div>
+ </div>
+    </form>
+</div>
+
+
+
+<script type="text/javascript" src="/js/libs/jquery.min.js">
+</script>
+<script type="text/javascript" src="/js/libs/layui/layui.js">
+</script>
+<script type="text/javascript" src="/js/libs/vue/vue.js">
+</script>
+<script type="text/javascript" src="/js/main.js">
+</script>
+<script type="text/javascript" src="/js/utils.js">
+</script>
+<script type="text/javascript" src="/js/libs/vue/vue-resource.js">
+</script>
+
+<script>
+    var G = {
+    	//editUrl: "./json/user-edit.json"
+    }
+    var APP = new Vue({
+		el: "#app",
+
+		data: {
+            personDto: {
+                perscode:"",
+                persname: "",
+                cardID: "",
+                ruralCard: "",
+                relation: "",
+                age: "",
+                sex: "",
+                birthday: "",
+                occupation: "",
+                workUnit: "",
+                liveAddress: "",
+                telephone: "",
+            },
+            contents:""
+		},
+        created: function () {
+            this.getPersonById();
+        },
+        methods: {
+            getPersonById: function () {
+                var Id = location.hash.substring(1) // 去掉 #
+                //发送 get 请求
+                this.$http.get('/medical/person',
+                    {params:{perscode:Id}},
+                    {emulateJSON:true}).then(function(result){
+                    if(result.data.status==200){
+                        this.personDto=result.data.data;
+                    }else {
+                        messageError(result.data.message);
+                    }
+                },function(result){
+                    messageError("请求失败!请重试~");
+                });
+
+            },
+            close: function () {
+                //关闭弹出层
+                x_admin_close("app");
+            }
+
+        }// methods end
+
+
+    }); //end Vue
+</script>
+
+</body>
+
+</html>

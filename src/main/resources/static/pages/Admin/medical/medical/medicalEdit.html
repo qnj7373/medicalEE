@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加数据页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+<body>
+<div class="x-body" id="app">
+    <form  class="layui-form">
+
+
+        <div class="layui-form-item">
+            <label for="medicalName" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                机构名称
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="medicalName"  v-model="medicalDto.medicalName" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label  class="layui-form-label">
+                <span class="text-color-red">*</span>
+                所属区域
+            </label>
+            <div class="layui-input-inline" >
+                <select name="regionId"   lay-filter="regionId"  lay-verify="required" >
+                    <option value="medicalDto.regionId"  style="display: none"  selected = "selected">{{medicalDto.reg.regionName}}</option>
+                    <option v-for="item,index in regions" :value="item.regionId" v-html="item.regionName" ></option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label  class="layui-form-label">
+                <span class="text-color-red">*</span>
+                隶属关系
+            </label>
+            <div class="layui-input-inline" >
+                <select name="lsgx"   lay-filter="lsgx"  lay-verify="required" >
+                    <option value="medicalDto.lsgx"  style="display: none"  selected = "selected">{{medicalDto.lsgx}}</option>
+                    <option v-for="item,index in s02" :value="item.name" v-html="item.name" ></option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label  class="layui-form-label">
+                <span class="text-color-red">*</span>
+                经济类型
+            </label>
+            <div class="layui-input-inline" >
+                <select name="ssjjlx"   lay-filter="ssjjlx"  lay-verify="required" >
+                    <option value="medicalDto.ssjjlx"  style="display: none"  selected = "selected">{{medicalDto.ssjjlx}}</option>
+                    <option v-for="item,index in s01" :value="item.name" v-html="item.name" ></option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label  class="layui-form-label">
+                <span class="text-color-red">*</span>
+                组织类型
+            </label>
+            <div class="layui-input-inline" >
+                <select name="jgjb"   lay-filter="jgjb"  lay-verify="required" >
+                    <option value="medicalDto.jgjb"  style="display: none"  selected = "selected">{{medicalDto.jgjb}}</option>
+                    <option v-for="item,index in s03" :value="item.name" v-html="item.name" ></option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label  class="layui-form-label">
+                <span class="text-color-red">*</span>
+                卫生机构大类
+            </label>
+            <div class="layui-input-inline" >
+                <select name="wsjgdl"   lay-filter="wsjgdl"  lay-verify="required" >
+                    <option value="medicalDto.wsjgdl"  style="display: none"  selected = "selected">{{medicalDto.wsjgdl}}</option>
+                    <option v-for="item,index in s04" :value="item.name" v-html="item.name" ></option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label  class="layui-form-label">
+                <span class="text-color-red">*</span>
+                卫生机构小类
+            </label>
+            <div class="layui-input-inline" >
+                <select name="wsjgxl"   lay-filter="wsjgxl"  lay-verify="required" >
+                    <option value="medicalDto.wsjgxl"  style="display: none"  selected = "selected">{{medicalDto.wsjgxl}}</option>
+                    <option v-for="item,index in s06" :value="item.name" v-html="item.name" ></option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label for="zgdw" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                主管单位
+            </label>
+            <div class="layui-input-inline">
+                <input  style="width:300px;" type="text" id="zgdw" name="zgdw" v-model="medicalDto.zgdw" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label for="kysj" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                开业时间
+            </label>
+            <div class="layui-input-inline">
+                <input  style="width:300px;" type="text" id="kysj" name="kysj" v-model="medicalDto.kysj" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label for="frdb" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                法人代表
+            </label>
+            <div class="layui-input-inline">
+                <input  style="width:300px;" type="text" id="frdb" name="frdb" v-model="medicalDto.frdb" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label for="zczj" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                注册资金
+            </label>
+            <div class="layui-input-inline">
+                <input  style="width:300px;" type="text" id="zczj" name="zczj" v-model="medicalDto.zczj" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <!-- placeholder -->
+            </label>
+            <button  type="button" class="layui-btn"  v-on:click="update">更新</button>
+            <button type="button" class="layui-btn layui-btn-danger " v-on:click="close" >取消</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/js/libs/jquery.min.js "></script>
+<script type="text/javascript" src="/js/libs/layui/layui.js"></script>
+<script type="text/javascript" src="/js/libs/vue/vue.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/utils.js"></script>
+<script type="text/javascript" src="/js/libs/vue/vue-resource.js">
+</script>
+
+<script>
+    // 初始化 Vue 组件
+    var APP = new Vue({
+        el: '#app',
+        // 数据
+        data: {
+            medicalDto:{
+              medicalName:"",
+              regionId:"",
+              lsgx:"",
+              ssjjlx:"",
+              wsjgdl:"",
+              wsjgxl:"",
+              zgdw:"",
+                kysj:"",
+              frdb:"",
+              zczj:"",
+                jgjb:"",
+            },
+            regions:[],
+            s01:[],
+            s02:[],
+            s03:[],
+            s04:[],
+            s06:[],
+            contents:""
+        },
+        created: function () {
+            this. getMedicalById();
+            this. getAllRegions();
+            this. gets01();
+            this. gets02();
+            this. gets03();
+            this. gets04();
+            this. gets06();
+            this.$nextTick(function () {
+                XuanRan();
+                initForm();
+            });
+        },
+        methods: {
+            initRegionId: function (val) {
+               this.medicalDto.regionId=val;
+            },
+            initRegionId: function (val) {
+               this.medicalDto.regionId=val;
+            },
+            initlsgx: function (val) {
+               this.medicalDto.lsgx=val;
+            },
+            initssjjlx: function (val) {
+               this.medicalDto.ssjjlx=val;
+            },
+             initwsjgdl: function (val) {
+               this.medicalDto.wsjgdl=val;
+            },
+            initwsjgxl: function (val) {
+               this.medicalDto.wsjgxl=val;
+            },
+            initjgjb: function (val) {
+               this.medicalDto.jgjb=val;
+            },
+
+
+            getMedicalById: function () {
+                var Id = location.hash.substring(1) // 去掉 #
+                //发送 get 请求
+                this.$http.get('/medical/medical',
+                    {params:{medicalId:Id}}
+                    ,{emulateJSON:true}).then(function(result){
+                    if(result.data.status==200){
+                        this.medicalDto=result.data.data;
+                    }else {
+                        messageError(result.data.message);
+                    }
+                },function(result){
+                    messageError("请求失败！请重试~");
+                });
+
+            },
+
+            getAllRegions: function () {
+                //发送 get 请求
+                this.$http.get('/medical/region/all',{emulateJSON:true}).then(function(result){
+                    if(result.data.status==200){
+                        this.regions=result.data.data;
+                    }else {
+                        messageError(result.data.message);
+                    }
+                },function(result){
+                    messageError("请求失败！请重试~");
+                });
+
+            },
+
+
+            gets01: function () {
+                //发送 get 请求
+                this.$http.get('/medical/s201/all',
+                    {
+                        params: {
+                            table:"s201_01"
+                        }
+                    }
+                    ,{emulateJSON:true}).then(function(result){
+                    if(result.data.status==200){
+                        this.s01=result.data.data;
+                    }else {
+                        messageError(result.data.message);
+                    }
+                },function(result){
+                    messageError("请求失败！请重试~");
+                });
+
+            },
+
+
+            gets02: function () {
+                //发送 get 请求
+                this.$http.get('/medical/s201/all',
+                    {
+                        params: {
+                            table:"s201_02"
+                        }
+                    }
+                    ,{emulateJSON:true}).then(function(result){
+                    if(result.data.status==200){
+                        this.s02=result.data.data;
+                    }else {
+                        messageError(result.data.message);
+                    }
+                },function(result){
+                    messageError("请求失败！请重试~");
+                });
+
+            },
+
+
+            gets03: function () {
+                //发送 get 请求
+                this.$http.get('/medical/s201/all',
+                    {
+                        params: {
+                            table:"s201_03"
+                        }
+                    }
+                    ,{emulateJSON:true}).then(function(result){
+                    if(result.data.status==200){
+                        this.s03=result.data.data;
+                    }else {
+                        messageError(result.data.message);
+                    }
+                },function(result){
+                    messageError("请求失败！请重试~");
+                });
+
+            },
+
+
+            gets04: function () {
+                //发送 get 请求
+                this.$http.get('/medical/s201/all',
+                    {
+                        params: {
+                            table:"s201_04"
+                        }
+                    }
+                    ,{emulateJSON:true}).then(function(result){
+                    if(result.data.status==200){
+                        this.s04=result.data.data;
+                    }else {
+                        messageError(result.data.message);
+                    }
+                },function(result){
+                    messageError("请求失败！请重试~");
+                });
+
+            },
+
+
+            gets06: function () {
+                //发送 get 请求
+                this.$http.get('/medical/s201/all',
+                    {
+                        params: {
+                            table:"s201_06"
+                        }
+                    }
+                    ,{emulateJSON:true}).then(function(result){
+                    if(result.data.status==200){
+                        this.s06=result.data.data;
+                    }else {
+                        messageError(result.data.message);
+                    }
+                },function(result){
+                    messageError("请求失败！请重试~");
+                });
+
+            },
+
+
+            update: function () {
+                this.$delete(this.medicalDto,'reg');
+                //发送 post 请求
+                this.$http.put('/medical/medical',
+                    this.medicalDto,{emulateJSON:true}).then(function(result){
+                    messageLoading();
+                    if(result.data.status==200){
+                        messageOk(result.data.message);
+                        //关闭弹出层
+                        x_admin_close("render");
+                    }else {
+                        messageError(result.data.message);
+                    }
+                },function(res){
+                    messageError("请求失败！请重试~请重试~");
+                });
+            },
+
+
+            close: function () {
+                //关闭弹出层
+                x_admin_close("app");
+            }
+        },
+
+    });//end vue
+
+    function initForm() {
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+            form.render('select');
+            form.on('select(regionId)',function (data) {
+                rend(data.value);
+            });
+            form.on('select(lsgx)',function (data) {
+                rendlsgx(data.value);
+            });
+            form.on('select(ssjjlx)',function (data) {
+                rendssjjlx(data.value);
+            });
+            form.on('select(wsjgdl)',function (data) {
+                rendwsjgdl(data.value);
+            });
+            form.on('select(wsjgxl)',function (data) {
+                rendwsjgxl(data.value);
+            });
+            form.on('select(jgjb)',function (data) {
+                rendjgjb(data.value);
+            });
+        });
+    }
+
+    function rend(val) {
+        this.APP.initRegionId(val);
+    }
+
+    function rendlsgx(val) {
+        this.APP.initlsgx(val);
+    }
+
+    function rendssjjlx(val) {
+        this.APP.initssjjlx(val);
+    }
+
+    function rendwsjgdl(val) {
+        this.APP.initwsjgdl(val);
+    }
+
+    function rendwsjgxl(val) {
+        this.APP.initwsjgxl(val);
+    }
+
+    function rendjgjb(val) {
+        this.APP.initjgjb(val);
+    }
+
+    function XuanRan() {
+        layui.use(['element','form'], function () {
+            // 重新渲染
+            var element = layui.element;
+            var form = layui.form;
+            form.render();
+            element.render();
+            element.init();
+
+        });
+    }
+</script>
+
+</body>
+
+</html>

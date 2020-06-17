@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加数据页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+<body>
+<div class="x-body" id="app">
+    <form  class="layui-form">
+
+        <div class="layui-form-item">
+            <label  class="layui-form-label">
+                <span class="text-color-red">*</span>
+                与户主关系
+            </label>
+            <div class="layui-input-inline" >
+                <select name="relation"   lay-filter="relation"  lay-verify="required" >
+                    <option placeholder="请选择"></option>
+                    <option value="户主" >户主</option>
+                    <option value="配偶" >配偶</option>
+                    <option value="子" >子</option>
+                    <option value="女" >女</option>
+                    <option value="孙子" >孙子</option>
+                    <option value="孙女" >孙女</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="persname" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                姓名
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="persname" name="persname" v-model="personDto.persname" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="cardID" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                身份证号
+            </label>
+            <div class="layui-input-inline">
+                <input  style="width:300px;" type="text" id="cardID" name="cardID" v-model="personDto.cardID" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="ruralCard" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                农合证卡号
+            </label>
+            <div class="layui-input-inline">
+                <input  style="width:300px;" type="text" id="ruralCard" name="ruralCard" v-model="personDto.ruralCard" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="age" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                年龄
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="age" name="age" v-model="personDto.age" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label  class="layui-form-label">
+                <span class="text-color-red">*</span>
+                性别
+            </label>
+            <div class="layui-input-inline">
+                <select name="sex"   lay-filter="sex"  lay-verify="required" >
+                    <option placeholder="请选择"></option>
+                    <option value="男" >男</option>
+                    <option value="女" >女</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label for="birthday" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                出生日期
+            </label>
+            <div class="layui-input-inline">
+                <input type="date" id="birthday" name="birthday" v-model="personDto.birthTime" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                点击选框选择日期
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="occupation" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                职业
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="occupation" name="occupation" v-model="personDto.occupation" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="workUnit" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                工作单位
+            </label>
+            <div class="layui-input-inline">
+                <input  style="width:300px;" type="text" id="workUnit" name="workUnit" v-model="personDto.workUnit" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="liveAddress" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                常住地址
+            </label>
+            <div class="layui-input-inline">
+                <input  style="width:300px;" type="text" id="liveAddress" name="liveAddress" v-model="personDto.liveAddress" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="telephone" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                联系电话
+            </label>
+            <div class="layui-input-inline">
+                <input  style="width:300px;" type="text" id="telephone" name="telephone" v-model="personDto.telephone" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <!-- placeholder -->
+            </label>
+            <button  type="button" class="layui-btn"  v-on:click="addPerson">确认新增</button>
+            <button type="button" class="layui-btn layui-btn-danger " v-on:click="close" >取消</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/js/libs/jquery.min.js "></script>
+<script type="text/javascript" src="/js/libs/layui/layui.js"></script>
+<script type="text/javascript" src="/js/libs/vue/vue.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/utils.js"></script>
+<script type="text/javascript" src="/js/libs/vue/vue-resource.js">
+</script>
+
+<script>
+    // 初始化 Vue 组件
+    var APP = new Vue({
+        el: '#app',
+        // 数据
+        data: {
+            personDto: {
+                famicode:"",
+                persname: "",
+                cardID: "",
+                ruralCard: "",
+                relation: "",
+                age: "",
+                sex: "",
+                birthTime: "",
+                occupation: "",
+                workUnit: "",
+                liveAddress: "",
+                telephone: "",
+            },
+            contents:""
+        },
+        created: function () {
+            this.personDto.famicode=location.hash.substring(1) // 去掉 #;
+            this.$nextTick(function () {
+                XuanRan();
+                initForm();
+            });
+        },
+        methods: {
+            initRelation: function (val) {
+               this.personDto.relation=val;
+            },
+            initSex: function (val) {
+               this.personDto.sex=val;
+            },
+            addPerson: function () {
+                //发送 post 请求
+                this.$http.post('/medical/person',
+                    this.personDto,{emulateJSON:true}).then(function(result){
+                    messageLoading();
+                    if(result.data.status==200){
+                        messageOk(result.data.message);
+                        //关闭弹出层
+                        x_admin_close("render");
+                    }else {
+                        messageError(result.data.message);
+                    }
+                },function(res){
+                    messageError("服务器内部出错!请重试~");
+                });
+            },
+
+
+            close: function () {
+                //关闭弹出层
+                x_admin_close("app");
+            }
+        },
+
+    });//end vue
+
+    function initForm() {
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+            form.render('select');
+            form.on('select(relation)',function (data) {
+                rendRelation(data.value);
+            });
+            form.on('select(sex)',function (data) {
+                rendSex(data.value);
+            });
+        });
+    }
+
+    function rendRelation(val) {
+        this.APP.initRelation(val);
+    }
+
+    function rendSex(val) {
+        this.APP.initSex(val);
+    }
+
+    function XuanRan() {
+        layui.use(['element','form'], function () {
+            // 重新渲染
+            var element = layui.element;
+            var form = layui.form;
+            form.render();
+            element.render();
+            element.init();
+
+        });
+    }
+</script>
+
+</body>
+
+</html>

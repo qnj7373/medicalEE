@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加数据页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+<div class="x-body" id="app">
+    <form  class="layui-form">
+
+
+        <div class="layui-form-item">
+            <label for="administrationId" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                所属行政编码
+            </label>
+            <div class="layui-input-inline">
+                <input type="text"  readonly="readonly" id="administrationId" name="administrationId" v-model="organDto.administrationId"  autocomplete="off" required="" lay-verify="required"  class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                该内容暂不允许编辑
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label for="organizationName" class="layui-form-label">
+                <span class="text-color-red">*</span>
+                机构名称
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="organizationName" name="organizationName" v-model="organDto.organizationName" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label  class="layui-form-label">
+                <span class="text-color-red">*</span>
+                所属区域
+            </label>
+            <div class="layui-input-inline" >
+                <select name="regionId"   lay-filter="RegionId"  lay-verify="required" >
+                    <option value="organDto.administrationPid" :value="organDto.regionId"  style="display: none"  selected = "selected">{{organDto.regionName}}</option>
+                    <option v-for="item,index in regions" :value="item.regionId" v-html="item.regionName" ></option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label  class="layui-form-label">
+                <span class="text-color-red">*</span>
+                上一级机构选择
+            </label>
+            <div class="layui-input-inline" >
+                <select name="Pid"   lay-filter="Pid"  lay-verify="required" >
+                    <option value="organDto.administrationPid"  style="display: none"  selected = "selected">{{organDto.organPName}}</option>
+                    <option value="0">无</option>
+                    <option v-for="item,index in organs" :value="item.administrationId" v-html="item.organizationName" ></option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                选择无则新增机构为一级机构
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label for="organizationCode" class="layui-form-label">
+                <span class="text-color-red"></span>
+                经办机构编码
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="organizationCode" name="organizationCode" v-model="organDto.organizationCode" required="" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                上一级机构选"无"需填写此项，不选可为空
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <!-- placeholder -->
+            </label>
+            <button  type="button" class="layui-btn"  v-on:click="update">保存</button>
+            <button type="button" class="layui-btn layui-btn-danger " v-on:click="close" >取消</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/js/libs/jquery.min.js "></script>
+<script type="text/javascript" src="/js/libs/layui/layui.js"></script>
+<script type="text/javascript" src="/js/libs/vue/vue.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/utils.js"></script>
+<script type="text/javascript" src="/js/libs/vue/vue-resource.js">
+</script>
+
+<link rel="stylesheet" href="/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="/ztree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="/ztree/js/jquery.ztree.excheck.js"></script>
+
+
+
+
+<script>
+
+
+    // 初始化 Vue 组件
+    var APP = new Vue({
+        el: '#app',
+        // 数据
+        data: {
+                organDto:{
+                    //经办机构编码
+                    organizationCode:"",
+                    //经办机构名称
+                    organizationName:"",
+                    administrationPid:"",
+                    organPName:"",
+                    Pid:"",
+                    regionId:"",
+                    regionName:"",
+                 },
+            tempId:"",
+            organs:[],
+            regions: [],
+            nodes:[],
+            contents:""
+        },
+        created: function () {
+          this.getOrganById();
+            this.$nextTick(function () {
+                XuanRan();
+                initForm();
+            });
+        },
+        methods: {
+            initPid: function (val) {
+                this.organDto.Pid=val;
+            },
+            initRegionId: function (val) {
+                this.organDto.regionId = val;
+            },
+           getOrganById: function () {
+                var Id = location.hash.substring(1) // 去掉 #
+                //发送 get 请求
+                this.$http.get('/medical/organization',
+                    {params:{administrationId:Id}},
+                    {emulateJSON: true}).then(function (result) {
+                    this.organDto=result.data.data;
+                    this.tempId=this.organDto.administrationPid;
+                    this.organs=result.data.dataBackUp.organs;
+                    this.regions=result.data.dataBackUp.regions;
+                    this.organDto.Pid= this.tempId;
+                    this.organDto.pid= this.tempId;
+                }, function (result) {
+                    messageError("请求失败!");
+                });
+            },
+
+            update: function () {
+                this.organDto.pid=this.organDto.Pid;
+                //发送 post 请求
+                this.$http.put('/medical/organization',
+                    this.organDto,{emulateJSON:true}).then(function(result){
+                    messageLoading();
+                    if(result.data.status==200){
+                        messageOk(result.data.message);
+                        //关闭弹出层
+                        x_admin_close("render");
+                    }else {
+                        messageError(result.data.message);
+                    }
+                },function(res){
+                    messageError("服务器内部出错!请重试~");
+                });
+
+
+            },
+
+
+            close: function () {
+                //关闭弹出层
+                x_admin_close("app");
+            }
+        }
+
+    });//end vue
+
+    function rend(val) {
+        this.APP.initPid(val);
+    }
+
+
+    function rendRegionId(val) {
+        this.APP.initRegionId(val);
+    }
+
+    function initForm() {
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+            form.render('select');
+            form.on('select(Pid)',function (data) {
+                rend(data.value);
+            });
+            form.on('select(RegionId)',function (data) {
+                rendRegionId(data.value);
+            });
+        });
+    }
+
+
+    function XuanRan() {
+        layui.use(['element','form'], function () {
+            // 重新渲染
+            var element = layui.element;
+            var form = layui.form;
+            form.render();
+            element.render('zTreeDemoBackground left','zTree');
+        });
+    }
+
+
+
+</script>
+
+</body>
+
+</html>
