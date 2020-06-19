@@ -54,6 +54,9 @@
 					<div v-if="item.state==='未通过'">
 						<button class="layui-btn layui-btn-sm layui-btn-danger" >{{ item.state }}</button>
 					</div>
+					<div v-if="item.state==='未审核'">
+						<button class="layui-btn layui-btn-sm layui-btn-danger" >{{ item.state }}</button>
+					</div>
 				</td>
 				<td class="td-manage">
 					<button class="layui-btn layui-btn-default layui-btn-xs"

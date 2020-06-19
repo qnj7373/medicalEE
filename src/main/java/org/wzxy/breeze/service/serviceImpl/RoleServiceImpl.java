@@ -70,8 +70,10 @@ public class RoleServiceImpl  implements IRoleService {
     }
 
     @Override
-    @CacheEvict(cacheNames = "roleZone",allEntries = true)
+    @Caching(evict={@CacheEvict(value = "roleZone", allEntries = true),
+            @CacheEvict(value = "menuZone", allEntries = true)})
     public HandleResult addRole(RoleDto roledto) {
+        System.out.println(roledto.getMenuIds()+"    *********");
         role role = new role(roledto);
         exist=rolesDao.isExist(role.getRoleId());
         if (exist==0){
