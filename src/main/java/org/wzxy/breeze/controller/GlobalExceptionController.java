@@ -52,7 +52,7 @@ public class GlobalExceptionController {
         }else  if (e instanceof AuthorizationException){
             logger.info("该用户无权限访问");
             Result.setData(null);
-            Result.setStatus(ResponseCode.getFailcode());
+            Result.setStatus(ResponseCode.getNoPermissions());
             Result.setMessage("无权限访问");
             return Result;
         }else {

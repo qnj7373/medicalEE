@@ -14,9 +14,14 @@ import java.io.Serializable;
     private static final int okcode=200;
     private static final int failcode=201;
     private static final int errorcode=-1;
+    private static final int NoPermissions=403;
 
 
     public ResponseCode() {
+    }
+
+    public static int getNoPermissions() {
+        return NoPermissions;
     }
 
     public static int getOkcode() {
