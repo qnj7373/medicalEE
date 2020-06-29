@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @create 2020-04
  */
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
- public class ResponseCode implements Serializable {
+ public  class  ResponseCode implements Serializable {
 
     private static final int okcode=200;
     private static final int failcode=201;

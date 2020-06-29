@@ -34,14 +34,13 @@ public class GlobalExceptionController {
             logger.error(e.getMessage());
             BindException ex = (BindException)e;
             List<ObjectError> errors = ex.getAllErrors();
-            String msg="";
+            StringBuffer msg= new StringBuffer("");
             for(ObjectError err:errors){
-                msg+=err.getDefaultMessage()+"~";
+                msg.append(err.getDefaultMessage()+"~");
             }
-
             Result.setData(null);
             Result.setStatus(ResponseCode.getFailcode());
-            Result.setMessage(msg);
+            Result.setMessage(msg.toString());
             return Result;
         }else  if (e instanceof AuthenticationException){
             logger.info("该用户账号或密码错误");
