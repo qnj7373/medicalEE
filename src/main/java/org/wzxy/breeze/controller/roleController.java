@@ -52,7 +52,7 @@ public class roleController {
     public ResponseResult queryRoleById(RoleDto roleDto) {
             Result.setData(roleService.findRoleById(roleDto.getRoleId()));
             Result.setDataBackUp(menuService.getTreeOfHave(roleDto.getRoleId()));
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取修改角色所需信息成功！");
             return Result;
     }
@@ -84,7 +84,7 @@ public class roleController {
                     roleService.findRoleByPage
                             (roleDto.getNowPage(),roleDto.getPageSize())
                     );
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取角色列表成功！");
             return Result;
     }
@@ -96,7 +96,7 @@ public class roleController {
     public ResponseResult getRolesToAdd() {
             Result.setData(roleService.getAllRole());
             Result.setDataBackUp(organService.getAllOrgans());
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取新增用户所需信息成功！");
             return Result;
     }

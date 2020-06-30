@@ -59,16 +59,16 @@ public class S201_xxServiceImpl  implements IS201_xxService {
         if(exist==0){
 
             if(s201_xxDao.adds201_xx(s)){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("新增成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("新增失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("新增失败，已存在!");
             return handle;
         }
@@ -80,15 +80,15 @@ public class S201_xxServiceImpl  implements IS201_xxService {
         exist=s201_xxDao.isExist(s.getId(), s.getTable());
         if(exist==1){
             if(s201_xxDao.updateS201_xx(s)){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("更新成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("更新失败!");
             }
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新失败，不存在!");
             return handle;
         }
@@ -105,16 +105,16 @@ public class S201_xxServiceImpl  implements IS201_xxService {
         exist=s201_xxDao.isExist(id, table);
         if(exist==1){
             if(s201_xxDao.deleteS201_xx(id, table)){
-                handle.setStatus(ResponseCode.getOkcode());
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("删除成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("删除失败!");
             }
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("删除失败，不存在!");
             return handle;
         }

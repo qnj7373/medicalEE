@@ -66,16 +66,16 @@ public class chronicdisServiceImpl  implements IChronicdisService {
         if(exist==0){
 
             if(  chronicdisDao.addChronicdis(new chronicdis(chrDto)) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("新增慢性病成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("新增慢性病失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("新增失败，慢性病已存在!");
             return handle;
         }
@@ -89,16 +89,16 @@ public class chronicdisServiceImpl  implements IChronicdisService {
         if(exist==1){
 
             if( chronicdisDao.updateChronicdis(new chronicdis(chrDto)) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("更新慢性病成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("更新慢性病失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新失败，慢性病不存在!");
             return handle;
         }
@@ -117,16 +117,16 @@ public class chronicdisServiceImpl  implements IChronicdisService {
         if(exist==1){
 
             if( chronicdisDao.deleteChronicdis(illcode) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("删除慢性病成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("删除慢性病失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("删除失败，慢性病不存在!");
             return handle;
         }

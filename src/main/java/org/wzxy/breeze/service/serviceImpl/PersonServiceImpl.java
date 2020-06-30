@@ -71,7 +71,7 @@ public class PersonServiceImpl implements IPersonService {
                 exist= personDao.isHolderOrPartnerExist(personDto.getFamicode(), personDto.getRelation());
 
                 if(exist==1){
-                    handle.setStatus(ResponseCode.getFailcode());
+                    handle.setStatus(ResponseCode.FAIL.getCode());
                     handle.setMessage("新增失败，一个家庭中只能有一个户主或配偶!");
                 }else {
                     if("户主".equals(personDto.getRelation()) ){
@@ -81,10 +81,10 @@ public class PersonServiceImpl implements IPersonService {
                         person person = new person(personDto);
 
                         if(personDao.addPerson(person)){
-                            handle.setStatus(ResponseCode.getOkcode());
+                            handle.setStatus(ResponseCode.OK.getCode());
                             handle.setMessage("新增家庭成员成功!");
                         }else{
-                            handle.setStatus(ResponseCode.getFailcode());
+                            handle.setStatus(ResponseCode.FAIL.getCode());
                             handle.setMessage("新增家庭成员失败!");
                         }
 
@@ -107,7 +107,7 @@ public class PersonServiceImpl implements IPersonService {
             }
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("新增失败，家庭成员已存在!");
             return handle;
         }
@@ -130,10 +130,10 @@ public class PersonServiceImpl implements IPersonService {
             }
 
             if(personDao.deletePerson(perscode)){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("删除家庭成员成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("删除家庭成员失败!");
             }
 
@@ -143,7 +143,7 @@ public class PersonServiceImpl implements IPersonService {
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("删除失败，家庭成员不存在!");
             return handle;
         }
@@ -164,7 +164,7 @@ public class PersonServiceImpl implements IPersonService {
                 String relation = personDao.findPersonById(personDto.getPerscode()).getRelation();
 
                 if(exist==1 && !( "户主".equals(relation)||"配偶".equals(relation) ) ){
-                    handle.setStatus(ResponseCode.getFailcode());
+                    handle.setStatus(ResponseCode.FAIL.getCode());
                     handle.setMessage("更新失败，一个家庭中只能有一个户主或配偶!");
                 }else {
                     if("户主".equals(personDto.getRelation()) ){
@@ -173,17 +173,17 @@ public class PersonServiceImpl implements IPersonService {
                             personDto.setBirthday(dateFormat.format(personDto.getBirthTime()));
                         }
                         if( personDao.updatePerson(new person(personDto))){
-                            handle.setStatus(ResponseCode.getOkcode());
+                            handle.setStatus(ResponseCode.OK.getCode());
                             handle.setMessage("更新家庭成员成功!");
                         }else{
-                            handle.setStatus(ResponseCode.getFailcode());
+                            handle.setStatus(ResponseCode.FAIL.getCode());
                             handle.setMessage("更新家庭成员失败!");
                         }
                         family familyByFamicode = familyDao.findFamilyByFamicode(personDto.getFamicode());
                         familyByFamicode.setHolderName(personDto.getPersname());
                         familyDao.updateFamily(familyByFamicode);
 
-                        handle.setStatus(ResponseCode.getOkcode());
+                        handle.setStatus(ResponseCode.OK.getCode());
                         handle.setMessage("更新家庭成员成功!");
                         return handle;
                     }else{
@@ -199,7 +199,7 @@ public class PersonServiceImpl implements IPersonService {
             }
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新失败，家庭成员不存在!");
             return handle;
         }
@@ -255,10 +255,10 @@ public class PersonServiceImpl implements IPersonService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         personDto.setBirthday(dateFormat.format(personDto.getBirthTime()));
         if( personDao.addPerson( new person(personDto))){
-            handle.setStatus(ResponseCode.getOkcode());
+            handle.setStatus(ResponseCode.OK.getCode());
             handle.setMessage("新增家庭成员成功!");
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("新增家庭成员失败!");
         }
         family familyByFamicode = familyDao.findFamilyByFamicode(personDto.getFamicode());
@@ -277,10 +277,10 @@ public class PersonServiceImpl implements IPersonService {
             personDto.setBirthday(dateFormat.format(personDto.getBirthTime()));
         }
         if( personDao.updatePerson(new person(personDto)) ){
-            handle.setStatus(ResponseCode.getOkcode());
+            handle.setStatus(ResponseCode.OK.getCode());
             handle.setMessage("更新家庭成员成功!");
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新家庭成员失败!");
         }
 

@@ -84,33 +84,33 @@ public class CertificateServiceImpl implements ICertificateService {
                         certDto.setRuralCard(personDao.findPersonByCardID(certDto.getCardID()).getRuralCard());
 
                         if(certDao.addCertificate(new certificate(certDto)) ){
-                            handle.setStatus(ResponseCode.getOkcode());
+                            handle.setStatus(ResponseCode.OK.getCode());
                             handle.setMessage("新增慢性病证信息成功!");
                         }else{
-                            handle.setStatus(ResponseCode.getFailcode());
+                            handle.setStatus(ResponseCode.FAIL.getCode());
                             handle.setMessage("新增慢性病证信息失败!");
                         }
 
                     }else{
-                        handle.setStatus(ResponseCode.getFailcode());
+                        handle.setStatus(ResponseCode.FAIL.getCode());
                         handle.setMessage("新增失败，该身份证号不存在!");
                     }
                 }else{
 
-                    handle.setStatus(ResponseCode.getFailcode());
+                    handle.setStatus(ResponseCode.FAIL.getCode());
                     handle.setMessage("新增失败，此人已拥有慢性病证!");
 
                 }
 
 
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("新增失败，该身份证号不在管辖范围内!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("新增失败，该慢性病证已存在!");
             return handle;
         }
@@ -123,16 +123,16 @@ public class CertificateServiceImpl implements ICertificateService {
         if(exist==1){
 
             if( certDao.deleteCertificate(certificateId) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("删除慢性病证信息成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("新增慢性病证信息失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("删除失败，慢性病证信息不存在!");
             return handle;
         }
@@ -163,34 +163,34 @@ public class CertificateServiceImpl implements ICertificateService {
                             certDto.setRuralCard(personDao.findPersonByCardID(certDto.getCardID()).getRuralCard());
 
                             if( certDao.updateCertificate(new certificate(certDto)) ){
-                                handle.setStatus(ResponseCode.getOkcode());
+                                handle.setStatus(ResponseCode.OK.getCode());
                                 handle.setMessage("更新慢性病证信息成功!");
                             }else{
-                                handle.setStatus(ResponseCode.getFailcode());
+                                handle.setStatus(ResponseCode.FAIL.getCode());
                                 handle.setMessage("更新慢性病证信息失败!");
                             }
 
 
                         }else{
-                            handle.setStatus(ResponseCode.getFailcode());
+                            handle.setStatus(ResponseCode.FAIL.getCode());
                             handle.setMessage("更新失败，该身份证号不存在!");
                         }
 
                     }else{
-                        handle.setStatus(ResponseCode.getFailcode());
+                        handle.setStatus(ResponseCode.FAIL.getCode());
                         handle.setMessage("更新失败，此人已拥有慢性病证!");
                     }
 
 
 
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新失败，该身份证号不在管辖范围内!");
         }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新失败，慢性病证信息不存在!");
             return handle;
         }

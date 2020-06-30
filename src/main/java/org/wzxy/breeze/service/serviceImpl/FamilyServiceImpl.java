@@ -68,16 +68,16 @@ public class FamilyServiceImpl implements IFamilyService {
             String nowTime = dateFormat.format(date);
             familyDto.setCreattime(nowTime);
             if( familyDao.addFamily(new family(familyDto)) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("新增家庭档案成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("新增家庭档案失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("新增失败，家庭档案已存在!");
             return handle;
         }
@@ -91,10 +91,10 @@ public class FamilyServiceImpl implements IFamilyService {
         exist=familyDao.isExist(famicode);
         if(exist==1){
             if( familyDao.deleteFamily(famicode) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("删除家庭档案成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("删除家庭档案失败!");
             }
                 ///还需删除家庭成员信息
@@ -106,7 +106,7 @@ public class FamilyServiceImpl implements IFamilyService {
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("删除失败，家庭档案不存在!");
             return handle;
         }
@@ -134,10 +134,10 @@ public class FamilyServiceImpl implements IFamilyService {
         if(exist==1){
             //更新家庭后记得把个人户主也更新
             if(  familyDao.updateFamily(new family(familyDto)) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("更新家庭档案成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("更新家庭档案失败!");
             }
             exist= personDao.familyIsExist(familyDto.getFamicode());
@@ -147,7 +147,7 @@ public class FamilyServiceImpl implements IFamilyService {
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新失败，家庭档案不存在!");
             return handle;
         }

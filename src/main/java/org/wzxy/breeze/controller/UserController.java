@@ -43,7 +43,7 @@ public class UserController  {
 	public ResponseResult queryUsersByPage(UserDto userDto) {
 			userDtopage = userService.UserPaging(userDto.getNowPage(), userDto.getPageSize());
 			Result.setData(userDtopage);
-			Result.setStatus(ResponseCode.getOkcode());
+			Result.setStatus(ResponseCode.OK.getCode());
 			Result.setMessage("获取用户分页列表成功！");
 			return Result;
 	}
@@ -69,7 +69,7 @@ public class UserController  {
 			map.put("organs", organService.getOrganOfHave(userDto.getUid()));
 			map.put("roles", roleService.getRolesOfHave(userDto.getUid()));
 			Result.setDataBackUp(map);
-			Result.setStatus(ResponseCode.getOkcode());
+			Result.setStatus(ResponseCode.OK.getCode());
 			Result.setMessage("查找用户成功！");
 			return Result;
 	}

@@ -47,7 +47,7 @@ public class expenseController {
             Result.setData(
              expenseService.findExpenseById(eDto.getId())
             );
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("查找报销信息成功！");
             return Result;
     }
@@ -86,7 +86,7 @@ public class expenseController {
                             eDto.getNowPage(), eDto.getPageSize()
                     )
             );
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取报销信息分页列表成功！");
             return Result;
     }

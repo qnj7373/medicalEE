@@ -9,30 +9,23 @@ import java.io.Serializable;
  * @create 2020-04
  */
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
- public  class  ResponseCode implements Serializable {
+ public  enum  ResponseCode implements Serializable {
 
-    private static final int okcode=200;
-    private static final int failcode=201;
-    private static final int errorcode=-1;
-    private static final int NoPermissions=403;
+    OK(200),
+    FAIL(201),
+    ERROR(-1),
+    NOPERMSISSION(403);
+
+    private int code;
 
 
-    public ResponseCode() {
+    ResponseCode(int code) {
+        this.code = code;
     }
 
-    public static int getNoPermissions() {
-        return NoPermissions;
+    public int getCode() {
+        return code;
     }
 
-    public static int getOkcode() {
-        return okcode;
-    }
 
-    public static int getFailcode() {
-        return failcode;
-    }
-
-    public static int getErrorcode() {
-        return errorcode;
-    }
 }

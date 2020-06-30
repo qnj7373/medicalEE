@@ -36,7 +36,7 @@ public class regionController {
             Result.setData(
                     regionService.findRegionByPage(regionDto.getNowPage(),regionDto.getPageSize())
             );
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取区域分页列表成功！");
             return Result;
 
@@ -47,7 +47,7 @@ public class regionController {
     @RequiresRoles("超级管理员")
     public ResponseResult getAllRegions() {
             Result.setData(regionService.getAllRegions());
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取全部区域成功！");
             return Result;
     }
@@ -57,7 +57,7 @@ public class regionController {
     @RequiresRoles(value={"乡镇农合经办人","超级管理员"},logical = Logical.OR)
     public ResponseResult getOwnRegions() {
             Result.setData(regionService.getOwnRegions(Status.getMyRegionId()));
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取乡镇相关区域成功！");
             return Result;
     }
@@ -80,7 +80,7 @@ public class regionController {
 
             Result.setData(regionService.queryRegionById(regionDto.getRegionId()));
             Result.setDataBackUp(regionService.getAllRegions());
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("查找区域成功！");
             return Result;
     }

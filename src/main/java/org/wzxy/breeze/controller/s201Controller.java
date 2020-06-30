@@ -52,7 +52,7 @@ public class s201Controller {
             Result.setData(
                     s201Service.findS201_xxById(s)
             );
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("查找信息成功！");
             return Result;
     }
@@ -71,7 +71,7 @@ public class s201Controller {
     @RequiresRoles("超级管理员")
     public ResponseResult getAllChronicdis(s201_xx s) {
             Result.setData(s201Service.getAllS201_xx(s.getTable()));
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取全部列表成功！");
             return Result;
     }
@@ -82,7 +82,7 @@ public class s201Controller {
     @RequiresRoles("超级管理员")
     public ResponseResult queryChronicdisByPage(s201_xx s) {
             Result.setData(s201Service.findS201_xxByPage(s.getTable(), s.getNowPage(), s.getPageSize()));
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取分页列表成功！");
             return Result;
     }

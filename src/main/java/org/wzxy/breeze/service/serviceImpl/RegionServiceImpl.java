@@ -75,17 +75,17 @@ public class RegionServiceImpl  implements IRegionService {
                 regionDto.setLevel(String.valueOf(i));
             }
             if(regionDao.addRegion( new region(regionDto))){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("新增区域成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("新增区域失败!");
             }
 
             return handle;
 
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("新增失败，区域已存在!");
             return handle;
         }
@@ -106,16 +106,16 @@ public class RegionServiceImpl  implements IRegionService {
                 regionDto.setLevel(String.valueOf(i));
             }
             if( regionDao.updateRegion( new region(regionDto))){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("更新区域信息成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("更新区域失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新失败，区域不存在!");
             return handle;
         }
@@ -127,15 +127,15 @@ public class RegionServiceImpl  implements IRegionService {
         exist= regionDao.isExist(regionId);
         if(exist==1){
             if(regionDao.deleteRegion(regionId)){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("删除区域成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("删除区域失败!");
             }
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("删除失败，区域不存在!");
             return handle;
         }

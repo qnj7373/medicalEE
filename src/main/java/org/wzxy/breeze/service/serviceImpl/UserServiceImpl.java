@@ -60,10 +60,10 @@ public class UserServiceImpl  implements IUserService{
 		if (exist==1){
 			user=userDao.queryUserById(uid);
 				if(userDao.deleteUserById(user)){
-					handle.setStatus(ResponseCode.getOkcode());
+					handle.setStatus(ResponseCode.OK.getCode());
 					handle.setMessage("删除用户成功!");
 				}else{
-					handle.setStatus(ResponseCode.getFailcode());
+					handle.setStatus(ResponseCode.FAIL.getCode());
 					handle.setMessage("删除用户失败!");
 				}
 			exist=userDao.UserRelationIsExist(uid);
@@ -73,7 +73,7 @@ public class UserServiceImpl  implements IUserService{
 
 			return handle;
 		}else{
-			handle.setStatus(ResponseCode.getFailcode());
+			handle.setStatus(ResponseCode.FAIL.getCode());
 			handle.setMessage("删除失败，用户不存在!");
 			return handle;
 		}
@@ -111,10 +111,10 @@ public class UserServiceImpl  implements IUserService{
 			}
 
 			if(userDao.updateUser( new User(userdto))){
-				handle.setStatus(ResponseCode.getOkcode());
+				handle.setStatus(ResponseCode.OK.getCode());
 				handle.setMessage("更新用户成功!");
 			}else{
-				handle.setStatus(ResponseCode.getFailcode());
+				handle.setStatus(ResponseCode.FAIL.getCode());
 				handle.setMessage("更新用户失败!");
 			}
 
@@ -134,7 +134,7 @@ public class UserServiceImpl  implements IUserService{
 			return handle;
 
 		}else{
-			handle.setStatus(ResponseCode.getFailcode());
+			handle.setStatus(ResponseCode.FAIL.getCode());
 			handle.setMessage("更新失败，用户不存在!");
 			return handle;
 		}
@@ -150,10 +150,10 @@ public class UserServiceImpl  implements IUserService{
 			userdto.setAdministrationId(Integer.parseInt(userdto.getTempistrationId()));
 			User addUser =  new User(userdto);
 				if(userDao.addUser(addUser)){
-					handle.setStatus(ResponseCode.getOkcode());
+					handle.setStatus(ResponseCode.OK.getCode());
 					handle.setMessage("新增用户成功!");
 				}else{
-					handle.setStatus(ResponseCode.getFailcode());
+					handle.setStatus(ResponseCode.FAIL.getCode());
 					handle.setMessage("新增用户失败!");
 				}
 			String[] roleIds = userdto.getRoleIds().split(",");
@@ -168,7 +168,7 @@ public class UserServiceImpl  implements IUserService{
 			return handle;
 
 		}else{
-			handle.setStatus(ResponseCode.getFailcode());
+			handle.setStatus(ResponseCode.FAIL.getCode());
 			handle.setMessage("新增失败，用户已存在!");
 			return handle;
 		}

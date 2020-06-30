@@ -134,17 +134,17 @@ public class MenuServiceImpl  implements IMenuService {
             menuDto.setMenuId(temp.toString());
 
             if(  menuDao.addMenu( new menu(menuDto) )){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("新增菜单成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("新增菜单失败!");
             }
 
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("新增失败，菜单已存在!");
             return handle;
         }
@@ -158,16 +158,16 @@ public class MenuServiceImpl  implements IMenuService {
        exist=menuDao.isExist(menuDto.getMenuId());
         if(exist==1){
             if(  menuDao.updateMenu( new menu(menuDto)) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("更新菜单成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("更新菜单失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新失败，菜单不存在!");
             return handle;
         }
@@ -197,17 +197,17 @@ public class MenuServiceImpl  implements IMenuService {
             exist=menuDao.MenuRelationIsExist(menuId);
             if(exist==1){
                 if(  menuDao.deleteMenuRelationByMenuId(menuId) ){
-                    handle.setStatus(ResponseCode.getOkcode());
+                    handle.setStatus(ResponseCode.OK.getCode());
                     handle.setMessage("删除菜单成功!");
                 }else{
-                    handle.setStatus(ResponseCode.getFailcode());
+                    handle.setStatus(ResponseCode.FAIL.getCode());
                     handle.setMessage("删除菜单失败!");
                 }
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("删除失败，菜单不存在!");
             return handle;
         }

@@ -85,11 +85,11 @@ public class RoleServiceImpl  implements IRoleService {
                 }
                 menuDao.addMenuRelation(role.getRoleId(), menuId);
             }
-            handle.setStatus(ResponseCode.getOkcode());
+            handle.setStatus(ResponseCode.OK.getCode());
             handle.setMessage("新增角色成功!");
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("新增失败，角色已存在!");
             return handle;
         }
@@ -117,11 +117,11 @@ public class RoleServiceImpl  implements IRoleService {
 
                 }
             }
-            handle.setStatus(ResponseCode.getOkcode());
+            handle.setStatus(ResponseCode.OK.getCode());
             handle.setMessage("更新角色成功!");
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新失败，角色不存在!");
             return handle;
         }
@@ -141,11 +141,11 @@ public class RoleServiceImpl  implements IRoleService {
             if(exist==1){
                 menuDao.deleteMenuRelation(roleId);
             }
-            handle.setStatus(ResponseCode.getOkcode());
+            handle.setStatus(ResponseCode.OK.getCode());
             handle.setMessage("删除角色成功!");
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("删除失败，角色不存在!");
             return handle;
         }

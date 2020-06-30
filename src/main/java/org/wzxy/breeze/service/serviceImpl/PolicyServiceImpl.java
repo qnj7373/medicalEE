@@ -67,15 +67,15 @@ public class PolicyServiceImpl implements IPolicyService {
         exist=policyDao.isExist(pDto.getId());
         if(exist==0){
             if(policyDao.addPolicy(new policy(pDto))){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("新增政策成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("新增政策失败!");
             }
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("新增失败，政策已存在!");
             return handle;
         }
@@ -87,15 +87,15 @@ public class PolicyServiceImpl implements IPolicyService {
         exist=policyDao.isExist(pDto.getId());
         if(exist==1){
             if(policyDao.updatePolicy(new policy(pDto))){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("更新政策成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("更新政策失败!");
             }
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新失败，政策不存在!");
             return handle;
         }
@@ -113,16 +113,16 @@ public class PolicyServiceImpl implements IPolicyService {
         exist=policyDao.isExist(id);
         if(exist==1){
             if(policyDao.deletePolicy(id)){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("删除政策成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("删除政策失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("删除失败，政策不存在!");
             return handle;
         }

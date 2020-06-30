@@ -37,7 +37,7 @@ public class organController  {
             Result.setData(
                organService.findOrganByPage(organDto.getNowPage(),organDto.getPageSize() )
             );
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取农合经办点分页列表成功！");
             return Result;
 
@@ -49,7 +49,7 @@ public class organController  {
     public ResponseResult getAllOrgans() {
             Result.setData(organService.getAllOrgans());
             Result.setDataBackUp(regionService.getAllRegions());
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取全部机构成功！");
             return Result;
     }
@@ -58,7 +58,7 @@ public class organController  {
     @RequiresRoles("超级管理员")
     public ResponseResult getOrgans() {
             Result.setData(organService.getTreeOfAdd());
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取机构树成功！");
             return Result;
     }
@@ -83,7 +83,7 @@ public class organController  {
             map.put("organs", organService.getAllOrgans());
             map.put("regions", regionService.getAllRegions());
             Result.setDataBackUp(map);
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("查找农合经办点成功！");
             return Result;
     }

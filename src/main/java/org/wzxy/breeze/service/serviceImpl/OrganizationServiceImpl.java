@@ -66,7 +66,7 @@ public class OrganizationServiceImpl implements IOrganizationService {
 
         exist= organizationDao.isXZExist(organDto.getRegionId(), "2");
         if (exist==1){
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("新增失败，该乡镇农合经办点已存在!");
             return handle;
         }else {
@@ -86,17 +86,17 @@ public class OrganizationServiceImpl implements IOrganizationService {
                 }
 
                 if(  organizationDao.addOrgan(new organization(organDto)) ){
-                    handle.setStatus(ResponseCode.getOkcode());
+                    handle.setStatus(ResponseCode.OK.getCode());
                     handle.setMessage("新增农合经办点成功!");
                 }else{
-                    handle.setStatus(ResponseCode.getFailcode());
+                    handle.setStatus(ResponseCode.FAIL.getCode());
                     handle.setMessage("新增农合经办点失败!");
                 }
 
                 return handle;
 
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("新增失败，农合经办点已存在!");
                 return handle;
             }
@@ -115,7 +115,7 @@ public class OrganizationServiceImpl implements IOrganizationService {
         } else {
             exist = organizationDao.isXZExist(organDto.getRegionId(), "2");
             if (exist == 1) {
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("更新失败，该乡镇农合经办点已存在!");
                 return handle;
             } else {
@@ -133,16 +133,16 @@ public class OrganizationServiceImpl implements IOrganizationService {
         exist= organizationDao.isExist(Id);
         if(exist==1){
             if(  organizationDao.deleteOrgan(Id) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("删除农合经办点成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("删除农合经办点失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("删除失败，农合经办点不存在!");
             return handle;
         }
@@ -250,15 +250,15 @@ public class OrganizationServiceImpl implements IOrganizationService {
                 organDto.setOrganizationCode(organById.getOrganizationCode());
             }
             if( organizationDao.updateOrgan(new organization(organDto)) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("更新农合经办点信息成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("更新农合经办点信息失败!");
             }
             return handle;
         } else {
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新失败，农合经办点不存在!");
             return handle;
         }

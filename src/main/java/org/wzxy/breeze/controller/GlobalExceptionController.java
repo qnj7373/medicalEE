@@ -39,26 +39,26 @@ public class GlobalExceptionController {
                 msg.append(err.getDefaultMessage()+"~");
             }
             Result.setData(null);
-            Result.setStatus(ResponseCode.getFailcode());
+            Result.setStatus(ResponseCode.FAIL.getCode());
             Result.setMessage(msg.toString());
             return Result;
         }else  if (e instanceof AuthenticationException){
             logger.info("该用户账号或密码错误");
             Result.setData(null);
-            Result.setStatus(ResponseCode.getFailcode());
+            Result.setStatus(ResponseCode.FAIL.getCode());
             Result.setMessage("账号或密码错误");
             return Result;
         }else  if (e instanceof AuthorizationException){
             logger.info("该用户无权限访问");
             Result.setData(null);
-            Result.setStatus(ResponseCode.getNoPermissions());
+            Result.setStatus(ResponseCode.NOPERMSISSION.getCode());
             Result.setMessage("无权限访问");
             return Result;
         }else {
             //其他异常
             logger.error(e.getMessage());
             Result.setData(null);
-            Result.setStatus(ResponseCode.getErrorcode());
+            Result.setStatus(ResponseCode.ERROR.getCode());
             Result.setMessage("服务器出错了！请联系管理员处理~");
             return Result;
         }

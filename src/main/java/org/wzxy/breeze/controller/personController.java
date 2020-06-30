@@ -55,7 +55,7 @@ public class personController {
             Result.setData(
             personService.findPersonByPage(personDto.getFamicode(), personDto.getNowPage(), personDto.getPageSize())
             );
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取家庭成员分页列表成功！");
             return Result;
     }
@@ -65,7 +65,7 @@ public class personController {
     @RequiresRoles(value={"乡镇农合经办人","县合管办经办人","县合管办领导"},logical = Logical.OR)
     public ResponseResult queryPersonById(PersonDto personDto) {
             Result.setData(personService.findPersonById(personDto.getPerscode()));
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("查找家庭成员信息成功！");
             return Result;
     }
@@ -80,10 +80,10 @@ public class personController {
                         personByHolder
                 );
                 Result.setDataBackUp(personByHolder.get(0).getFamicode());
-                Result.setStatus(ResponseCode.getOkcode());
+                Result.setStatus(ResponseCode.OK.getCode());
                 Result.setMessage("根据户主姓名查找家庭成员成功！");
             }else{
-                Result.setStatus(ResponseCode.getFailcode());
+                Result.setStatus(ResponseCode.FAIL.getCode());
                 Result.setMessage("不存在该户主的家庭成员或该户不在管辖范围内！");
             }
 
@@ -99,10 +99,10 @@ public class personController {
                 Result.setData(
                         personByCardID
                 );
-                Result.setStatus(ResponseCode.getOkcode());
+                Result.setStatus(ResponseCode.OK.getCode());
                 Result.setMessage("根据身份证查找家庭成员成功！");
             }else{
-                Result.setStatus(ResponseCode.getFailcode());
+                Result.setStatus(ResponseCode.FAIL.getCode());
                 Result.setMessage("该身份证不存在或该成员未参合或不在管辖范围内！");
             }
 

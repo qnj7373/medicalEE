@@ -51,7 +51,7 @@ public class policyController {
     @RequiresRoles("县合管办领导")
     public ResponseResult queryPolicyById(policyDto pDto) {
             Result.setData(policyService.findPolicyById(pDto.getId()));
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("查找政策信息成功！");
             return Result;
     }
@@ -70,7 +70,7 @@ public class policyController {
     @RequiresRoles("县合管办领导")
     public ResponseResult getAllPolicy() {
             Result.setData( policyService.getAllPolicy());
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取全部政策列表成功！");
             return Result;
     }
@@ -81,7 +81,7 @@ public class policyController {
     @RequiresRoles("县合管办领导")
     public ResponseResult queryPolicyByPage(policyDto pDto) {
             Result.setData(policyService.findPolicyByPage(pDto.getNowPage(), pDto.getPageSize()));
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取政策分页列表成功！");
             return Result;
     }

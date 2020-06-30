@@ -59,7 +59,7 @@ public class LoginController {
                 Result.setUrl("Index");
             }
 
-        Result.setStatus(ResponseCode.getOkcode());
+        Result.setStatus(ResponseCode.OK.getCode());
         Result.setMessage("登录成功了~欢迎你!");
         return Result;
 
@@ -71,7 +71,7 @@ public class LoginController {
     public ResponseResult getMenusIndex() {
 
             Result.setData(MenuService.getMenusIndex(getUId.getid()));
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取菜单成功！");
             return Result;
 

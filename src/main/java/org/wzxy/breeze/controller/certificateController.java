@@ -47,7 +47,7 @@ public class certificateController {
             Result.setData(
            certService.findCertByPage(Status.getMyRegionId(), certDto.getNowPage(), certDto.getPageSize())
             );
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取慢性病证分页列表成功！");
             return Result;
     }
@@ -80,7 +80,7 @@ public class certificateController {
     public ResponseResult queryCertById(certificateDto certDto) {
             Result.setData( certService.findCertById(certDto.getCertificateId()));
             Result.setDataBackUp(chronicdisService.getAllChronicdis());
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("查找慢性病证信息成功！");
             return Result;
     }

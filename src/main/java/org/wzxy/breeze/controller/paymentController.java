@@ -55,7 +55,7 @@ public class paymentController {
             Result.setData(
                     paymentService.findPaymentById(payDto.getPaymentId())
                     );
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("查找参合登记信息成功！");
             return Result;
     }
@@ -78,7 +78,7 @@ public class paymentController {
     public ResponseResult queryPaymentByPage(paymentDto payDto) {
             Result.setData(
                     paymentService.findPaymentByPage(Status.getMyRegionId(), payDto.getNowPage(), payDto.getPageSize() ) );
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取慢性病分页列表成功！");
             return Result;
     }

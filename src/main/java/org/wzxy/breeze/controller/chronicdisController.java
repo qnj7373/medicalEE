@@ -51,7 +51,7 @@ public class chronicdisController {
     @RequiresRoles("超级管理员")
     public ResponseResult queryChronicdisById(chronicdisDto chronDto) {
             Result.setData(chronicdisService.findChronicdisById(chronDto.getIllcode()));
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("查找慢性病信息成功！");
             return Result;
     }
@@ -70,7 +70,7 @@ public class chronicdisController {
     @RequiresRoles(value={"乡镇农合经办人","超级管理员"},logical = Logical.OR)
     public ResponseResult getAllChronicdis() {
             Result.setData(chronicdisService.getAllChronicdis());
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取全部慢性病列表成功！");
             return Result;
     }
@@ -81,7 +81,7 @@ public class chronicdisController {
     @RequiresRoles("超级管理员")
     public ResponseResult queryChronicdisByPage(chronicdisDto chronDto) {
             Result.setData(chronicdisService.findChronicdisByPage(chronDto.getNowPage(), chronDto.getPageSize()));
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取慢性病分页列表成功！");
             return Result;
     }

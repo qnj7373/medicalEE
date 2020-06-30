@@ -39,7 +39,7 @@ public class familyController  {
                     Status.getMyRegionId(), familyDto.getNowPage(), familyDto.getPageSize()
                     )
             );
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取家庭档案分页列表成功！");
             return Result;
     }
@@ -72,7 +72,7 @@ public class familyController  {
     public ResponseResult queryFamilyById(FamilyDto familyDto) {
             Result.setData(familyService.findFamilyById(familyDto.getFamicode()));
             Result.setDataBackUp(regionService.getOwnRegions(Status.getMyRegionId()));
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("查找家庭档案信息成功！");
             return Result;
     }

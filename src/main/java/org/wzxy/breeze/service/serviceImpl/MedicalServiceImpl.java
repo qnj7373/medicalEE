@@ -61,16 +61,16 @@ public class MedicalServiceImpl implements IMedicalService {
         exist=medicalDao.isExist(m.getMedicalId());
         if(exist==0){
             if(  medicalDao.add(m) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("新增医疗机构成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("新增医疗机构失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("新增失败，医疗机构已存在!");
             return handle;
         }
@@ -83,16 +83,16 @@ public class MedicalServiceImpl implements IMedicalService {
         if(exist==1){
 
             if(  medicalDao.update(m) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("更新医疗机构成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("更新医疗机构失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新失败，医疗机构不存在!");
             return handle;
         }
@@ -110,16 +110,16 @@ public class MedicalServiceImpl implements IMedicalService {
         exist=medicalDao.isExist(medicalId);
         if(exist==1){
             if(   medicalDao.delete(medicalId)){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("删除医疗机构成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("删除医疗机构失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("删除失败，医疗机构不存在!");
             return handle;
         }

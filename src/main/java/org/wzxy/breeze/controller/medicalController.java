@@ -52,7 +52,7 @@ public class medicalController {
     @RequiresRoles("超级管理员")
     public ResponseResult queryMedicalById(medical m) {
             Result.setData(medicalService.findMedicalById(m.getMedicalId()));
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("查找医疗机构成功！");
             return Result;
     }
@@ -71,7 +71,7 @@ public class medicalController {
     @RequiresRoles("超级管理员")
     public ResponseResult getAllMedical() {
             Result.setData( medicalService.getAllMedical());
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取全部医疗机构列表成功！");
             return Result;
     }
@@ -82,7 +82,7 @@ public class medicalController {
     @RequiresRoles("超级管理员")
     public ResponseResult queryMedicalByPage(medical m) {
             Result.setData(medicalService.findMedicalByPage(m.getNowPage(), m.getPageSize()));
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取医疗机构分页列表成功！");
             return Result;
     }

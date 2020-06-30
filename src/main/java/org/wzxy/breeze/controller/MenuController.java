@@ -54,7 +54,7 @@ public class MenuController {
             MenuDto menuById = menuService.findMenuById(menuDto.getMenuId());
             Result.setData(menuById);
             Result.setDataBackUp(menuService.getAllMenus());
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("查找用户成功！");
             return Result;
     }
@@ -73,7 +73,7 @@ public class MenuController {
     @RequiresRoles("超级管理员")
     public ResponseResult getAllMenus() {
             Result.setData(menuService.getAllMenus());
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取全部菜单成功！");
             return Result;
     }
@@ -82,7 +82,7 @@ public class MenuController {
     @RequiresRoles("超级管理员")
     public ResponseResult getRolesTreeOfAdd(){
             Result.setData(menuService.getTreeOfAdd());
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取菜单树成功！");
             return Result;
     }
@@ -93,7 +93,7 @@ public class MenuController {
     public ResponseResult queryMenuByPage(MenuDto menuDto) {
             menuPage=menuService.findMenuByPage(menuDto.getNowPage(), menuDto.getPageSize());
             Result.setData(menuPage);
-            Result.setStatus(ResponseCode.getOkcode());
+            Result.setStatus(ResponseCode.OK.getCode());
             Result.setMessage("获取菜单分页列表成功！");
             return Result;
     }

@@ -64,17 +64,17 @@ public class PaymentServiceImpl implements IPaymentService {
             payDto.setPayDate(nowTime);
 
             if( payDao.addPayment(new payment(payDto)) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("参合登记成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("参合登记失败!");
             }
 
             return handle;
 
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("登记失败，登记列表已存在!");
             return handle;
         }
@@ -89,16 +89,16 @@ public class PaymentServiceImpl implements IPaymentService {
         exist= payDao.isExist(paymentId);
         if(exist==1){
             if(  payDao.deletePayment(paymentId) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("删除参合登记信息成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("删除参合登记信息失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("删除失败，登记信息不存在!");
             return handle;
         }
@@ -114,17 +114,17 @@ public class PaymentServiceImpl implements IPaymentService {
         if(exist==1){
 
             if(  payDao.updatePayment( new payment(payDto))){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("更新登记信息成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("更新登记信息失败!");
             }
 
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("更新失败，登记信息不存在!");
             return handle;
         }

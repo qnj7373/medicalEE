@@ -102,7 +102,7 @@ public class expenseServiceImpl implements IExpenseService {
                     }
                     //本年度报销金额已达封顶线,无法再报销
                     if(already>=maxline){
-                        handle.setStatus(ResponseCode.getFailcode());
+                        handle.setStatus(ResponseCode.FAIL.getCode());
                         handle.setMessage("报销失败，本年度报销金额已达上限!");
                         return handle;
                     }else {
@@ -110,13 +110,13 @@ public class expenseServiceImpl implements IExpenseService {
                         if(expenseNum >=maxline&&already<maxline){
                             expenseNum=maxline-already;
                             eDto.setAmount(expenseNum);
-                            handle.setStatus(ResponseCode.getOkcode());
+                            handle.setStatus(ResponseCode.OK.getCode());
                             handle.setMessage("报销成功!由于报销金额已超上限，" +
                                     "所以只给予了允许范围内的报销金额 "+expenseNum+" !");
 
                         }else{  //本次应报销金额未到达封顶，可报销金额还有
                             eDto.setAmount(expenseNum);
-                            handle.setStatus(ResponseCode.getOkcode());
+                            handle.setStatus(ResponseCode.OK.getCode());
                             handle.setMessage("报销成功!本次报销金额为 " +expenseNum+" !");
                         }
 
@@ -127,18 +127,18 @@ public class expenseServiceImpl implements IExpenseService {
                 eDto.setState("未审核");
                      if(   expenseDao.addExpense( new expense(eDto)) ){
                      }else{
-                         handle.setStatus(ResponseCode.getFailcode());
+                         handle.setStatus(ResponseCode.FAIL.getCode());
                          handle.setMessage("报销失败!");
                      }
 
                 }else{      //不一致
-                        handle.setStatus(ResponseCode.getFailcode());
+                        handle.setStatus(ResponseCode.FAIL.getCode());
                         handle.setMessage("报销失败，报销信息与慢病证信息不一致或尚无慢性病证!");
                 }
 
              return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("报销失败，报销信息已存在!");
             return handle;
         }
@@ -156,16 +156,16 @@ public class expenseServiceImpl implements IExpenseService {
         exist=expenseDao.isExist(eDto.getId());
         if(exist==1){
             if( expenseDao.updateExpenseState(new expense(eDto)) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("审核成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("审核失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("审核失败，报销信息不存在!");
             return handle;
         }
@@ -185,16 +185,16 @@ public class expenseServiceImpl implements IExpenseService {
         if(exist==1){
 
             if(  expenseDao.deleteExpense(Id) ){
-                handle.setStatus(ResponseCode.getOkcode());
+                handle.setStatus(ResponseCode.OK.getCode());
                 handle.setMessage("删除报销信息成功!");
             }else{
-                handle.setStatus(ResponseCode.getFailcode());
+                handle.setStatus(ResponseCode.FAIL.getCode());
                 handle.setMessage("删除报销信息失败!");
             }
 
             return handle;
         }else{
-            handle.setStatus(ResponseCode.getFailcode());
+            handle.setStatus(ResponseCode.FAIL.getCode());
             handle.setMessage("删除失败，报销信息不存在!");
             return handle;
         }
