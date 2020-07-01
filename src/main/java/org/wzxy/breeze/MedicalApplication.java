@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @EnableCaching
 @SpringBootApplication
-@MapperScan("org.wzxy.breeze.mapper") //扫描mapper接口位置
+@MapperScan("org.wzxy.breeze.core.mapper") //扫描mapper接口位置
 public class MedicalApplication {
 
     public static void main(String[] args) {
