@@ -4,6 +4,7 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.wzxy.breeze.common.annotation.MedicalLog;
 import org.wzxy.breeze.core.model.dto.OrganizationDto;
 import org.wzxy.breeze.core.model.po.HandleResult;
 import org.wzxy.breeze.core.model.vo.ResponseCode;
@@ -30,9 +31,9 @@ public class organController  {
     @Autowired
     private HandleResult handle ;
 
-    //////////分页查
     @GetMapping("/organization/page")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "获取农合经办点分页列表")
     public ResponseResult queryOrgansByPage(OrganizationDto organDto) {
             Result.setData(
                organService.findOrganByPage(organDto.getNowPage(),organDto.getPageSize() )
@@ -46,6 +47,7 @@ public class organController  {
 
     @GetMapping("/organization/all")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "获取全部机构")
     public ResponseResult getAllOrgans() {
             Result.setData(organService.getAllOrgans());
             Result.setDataBackUp(regionService.getAllRegions());
@@ -56,6 +58,7 @@ public class organController  {
 
     @GetMapping("/organization/tree/add")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "获取机构树")
     public ResponseResult getOrgans() {
             Result.setData(organService.getTreeOfAdd());
             Result.setStatus(ResponseCode.OK.getCode());
@@ -63,9 +66,9 @@ public class organController  {
             return Result;
     }
 
-    //////////新增
     @PostMapping("/organization")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "新增机构")
     public ResponseResult AddOrgan(@Validated OrganizationDto organDto) {
             handle=organService.addOrgan(organDto);
             Result.setStatus(handle.getStatus());
@@ -74,9 +77,9 @@ public class organController  {
     }
 
 
-    //编辑前查
     @GetMapping("/organization")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "查找机构")
     public ResponseResult queryOrganById(OrganizationDto organDto) {
             Result.setData(organService.queryOrganById(organDto.getAdministrationId()));
             Map<String,Object> map = new HashMap<>();
@@ -89,9 +92,9 @@ public class organController  {
     }
 
 
-    //////////更新
     @PutMapping("/organization")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "更新机构")
     public ResponseResult updateOrgan(@Validated OrganizationDto organDto) {
             handle= organService.updateOrgan(organDto);
             Result.setStatus(handle.getStatus());
@@ -102,6 +105,7 @@ public class organController  {
 
     @DeleteMapping("/organization")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "删除机构")
     public ResponseResult deleteOrgan(OrganizationDto organDto) {
             handle= organService.deleteOrganById(organDto.getAdministrationId());
             Result.setStatus(handle.getStatus());

@@ -4,6 +4,7 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.wzxy.breeze.common.annotation.MedicalLog;
 import org.wzxy.breeze.core.model.dto.policyDto;
 import org.wzxy.breeze.core.model.po.HandleResult;
 import org.wzxy.breeze.core.model.vo.ResponseCode;
@@ -26,9 +27,9 @@ public class policyController {
     @Autowired
     private HandleResult handle;
 
-    //////////新增
     @PostMapping("/policy")
     @RequiresRoles("县合管办领导")
+    @MedicalLog(description = "新增报销政策")
     public ResponseResult addPolicy(@Validated policyDto pDto) {
             handle=policyService.addPolicy(pDto);
             Result.setStatus(handle.getStatus());
@@ -39,6 +40,7 @@ public class policyController {
     //////////更新
     @PutMapping("/policy")
     @RequiresRoles("县合管办领导")
+    @MedicalLog(description = "更新报销政策")
     public ResponseResult updatePolicy(@Validated policyDto pDto) {
             handle=policyService.updatePolicy(pDto);
             Result.setStatus(handle.getStatus());
@@ -46,9 +48,9 @@ public class policyController {
             return Result;
     }
 
-    //编辑前查
     @GetMapping("/policy")
     @RequiresRoles("县合管办领导")
+    @MedicalLog(description = "查找政策信息")
     public ResponseResult queryPolicyById(policyDto pDto) {
             Result.setData(policyService.findPolicyById(pDto.getId()));
             Result.setStatus(ResponseCode.OK.getCode());
@@ -59,6 +61,7 @@ public class policyController {
 
     @DeleteMapping("/policy")
     @RequiresRoles("县合管办领导")
+    @MedicalLog(description = "删除报销政策")
     public ResponseResult deletePolicyById(policyDto pDto) {
             handle=policyService.deletePolicyById(pDto.getId());
             Result.setStatus(handle.getStatus());
@@ -68,6 +71,7 @@ public class policyController {
 
     @GetMapping("/policy/all")
     @RequiresRoles("县合管办领导")
+    @MedicalLog(description = "获取全部政策列表")
     public ResponseResult getAllPolicy() {
             Result.setData( policyService.getAllPolicy());
             Result.setStatus(ResponseCode.OK.getCode());
@@ -76,9 +80,9 @@ public class policyController {
     }
 
 
-    //////////分页查
     @GetMapping("/policy/page")
     @RequiresRoles("县合管办领导")
+    @MedicalLog(description = "获取政策分页列表")
     public ResponseResult queryPolicyByPage(policyDto pDto) {
             Result.setData(policyService.findPolicyByPage(pDto.getNowPage(), pDto.getPageSize()));
             Result.setStatus(ResponseCode.OK.getCode());

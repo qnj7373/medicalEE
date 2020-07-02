@@ -7,6 +7,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.wzxy.breeze.common.annotation.MedicalLog;
 import org.wzxy.breeze.common.utils.getUId;
 import org.wzxy.breeze.core.model.po.User;
 import org.wzxy.breeze.core.model.vo.ResponseCode;
@@ -32,12 +33,14 @@ public class LoginController {
     private ModelAndView mv = new ModelAndView();
 
     @GetMapping("/notLogin")
+    @MedicalLog(description = "用户未登录")
     public ModelAndView notLogin(){
         mv.setViewName("login");
         return mv;
     }
 
     @PostMapping("/login")
+    @MedicalLog(description = "用户登录")
     public ResponseResult login(User loginUser){
         //添加用户认证信息
         UsernamePasswordToken upToken = new UsernamePasswordToken(
@@ -64,6 +67,7 @@ public class LoginController {
 
 
     @GetMapping("/getMenusIndex")
+    @MedicalLog(description = "用户获取菜单")
     public ResponseResult getMenusIndex() {
 
             Result.setData(MenuService.getMenusIndex(getUId.getid()));
@@ -71,16 +75,6 @@ public class LoginController {
             Result.setMessage("获取菜单成功！");
             return Result;
 
-    }
-
-
-
-
-
-    @RequiresRoles("admin")
-    @GetMapping("/testShiro")
-    public  String test(){
-        return "权限控制测试成功了";
     }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.wzxy.breeze.common.annotation.MedicalLog;
 import org.wzxy.breeze.core.model.dto.FamilyDto;
 import org.wzxy.breeze.core.model.dto.PersonDto;
 import org.wzxy.breeze.core.model.po.HandleResult;
@@ -38,9 +39,9 @@ public class personController {
     private getStatusService Status;
 
 
-    //////////新增
     @PostMapping("/person")
     @RequiresRoles("乡镇农合经办人")
+    @MedicalLog(description = "新增家庭成员信息")
     public ResponseResult addPerson(@Validated PersonDto personDto) {
             handle= personService.addPerson(personDto);
             Result.setStatus(handle.getStatus());
@@ -48,9 +49,9 @@ public class personController {
             return Result;
     }
 
-    //////////分页查
     @GetMapping("/person/page")
     @RequiresRoles(value={"乡镇农合经办人","县合管办经办人","县合管办领导"},logical = Logical.OR)
+    @MedicalLog(description = "获取家庭成员分页列表")
     public ResponseResult queryPersonByPage(PersonDto personDto) {
             Result.setData(
             personService.findPersonByPage(personDto.getFamicode(), personDto.getNowPage(), personDto.getPageSize())
@@ -60,9 +61,9 @@ public class personController {
             return Result;
     }
 
-//编辑前查
     @GetMapping("/person")
     @RequiresRoles(value={"乡镇农合经办人","县合管办经办人","县合管办领导"},logical = Logical.OR)
+    @MedicalLog(description = "查找家庭成员信息")
     public ResponseResult queryPersonById(PersonDto personDto) {
             Result.setData(personService.findPersonById(personDto.getPerscode()));
             Result.setStatus(ResponseCode.OK.getCode());
@@ -70,9 +71,9 @@ public class personController {
             return Result;
     }
 
-    //参合前查
     @PostMapping("/person/family/holder")
     @RequiresRoles("乡镇农合经办人")
+    @MedicalLog(description = "根据户主姓名查找家庭成员信息")
     public ResponseResult queryPersonByHolderName(FamilyDto familyDto) {
             List<PersonDto> personByHolder = personService.findPersonByHolder(familyDto.getHolderName(), Status.getMyRegionId());
             if (personByHolder.size()!=0){
@@ -93,6 +94,7 @@ public class personController {
     //报销前查
     @PostMapping("/person/card")
     @RequiresRoles("乡镇农合经办人")
+    @MedicalLog(description = "根据身份证查找家庭成员信息")
     public ResponseResult queryPersonByCardID(PersonDto personDto) {
             List<PersonDto> personByCardID = personService.findPersonByCardID(personDto.getCardID(), Status.getMyRegionId());
             if (personByCardID!=null){
@@ -110,9 +112,9 @@ public class personController {
     }
 
 
-    //////////更新
     @PutMapping("/person")
     @RequiresRoles("乡镇农合经办人")
+    @MedicalLog(description = "更新家庭成员信息")
     public ResponseResult updatePerson(@Validated PersonDto personDto) {
             handle= personService.updatePerson(personDto);
             Result.setStatus(handle.getStatus());
@@ -124,6 +126,7 @@ public class personController {
 
     @DeleteMapping("/person")
     @RequiresRoles("乡镇农合经办人")
+    @MedicalLog(description = "删除家庭成员信息")
     public ResponseResult deletePersonById(PersonDto personDto) {
             handle=personService.deletePersonById(personDto.getPerscode());
             Result.setStatus(handle.getStatus());

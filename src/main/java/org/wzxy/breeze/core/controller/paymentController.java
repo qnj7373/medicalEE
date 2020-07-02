@@ -4,6 +4,7 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.wzxy.breeze.common.annotation.MedicalLog;
 import org.wzxy.breeze.core.model.dto.paymentDto;
 import org.wzxy.breeze.core.model.po.HandleResult;
 import org.wzxy.breeze.core.model.vo.ResponseCode;
@@ -28,9 +29,9 @@ public class paymentController {
     @Autowired
     private HandleResult handle;
 
-    //////////新增
     @PostMapping("/payment")
     @RequiresRoles("乡镇农合经办人")
+    @MedicalLog(description = "新增参合信息")
     public ResponseResult addPayment(@Validated paymentDto payDto) {
             handle=paymentService.addPayment(payDto);
             Result.setStatus(handle.getStatus());
@@ -38,9 +39,9 @@ public class paymentController {
             return Result;
     }
 
-    //////////更新
     @PutMapping("/payment")
     @RequiresRoles("乡镇农合经办人")
+    @MedicalLog(description = "更新参合信息")
     public ResponseResult updatePayment(@Validated paymentDto payDto) {
             handle=paymentService.updatePayment(payDto);
             Result.setStatus(handle.getStatus());
@@ -48,9 +49,9 @@ public class paymentController {
             return Result;
     }
 
-    //编辑前查
     @GetMapping("/payment")
     @RequiresRoles("乡镇农合经办人")
+    @MedicalLog(description = "查找参合信息")
     public ResponseResult queryPaymentById(paymentDto payDto) {
             Result.setData(
                     paymentService.findPaymentById(payDto.getPaymentId())
@@ -63,6 +64,7 @@ public class paymentController {
 
     @DeleteMapping("/payment")
     @RequiresRoles("乡镇农合经办人")
+    @MedicalLog(description = "删除参合信息")
     public ResponseResult deletePaymentById(paymentDto payDto) {
             handle=paymentService.deletePaymentById(payDto.getPaymentId());
             Result.setStatus(handle.getStatus());
@@ -72,9 +74,9 @@ public class paymentController {
 
 
 
-    //////////分页查
     @GetMapping("/payment/page")
     @RequiresRoles("乡镇农合经办人")
+    @MedicalLog(description = "获取慢性病分页列表")
     public ResponseResult queryPaymentByPage(paymentDto payDto) {
             Result.setData(
                     paymentService.findPaymentByPage(Status.getMyRegionId(), payDto.getNowPage(), payDto.getPageSize() ) );

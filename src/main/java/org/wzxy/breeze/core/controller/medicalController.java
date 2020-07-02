@@ -4,6 +4,7 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.wzxy.breeze.common.annotation.MedicalLog;
 import org.wzxy.breeze.core.model.po.HandleResult;
 import org.wzxy.breeze.core.model.po.medical;
 import org.wzxy.breeze.core.model.vo.ResponseCode;
@@ -27,9 +28,9 @@ public class medicalController {
     private HandleResult handle;
 
 
-    //////////新增
     @PostMapping("/medical")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "新增医疗机构")
     public ResponseResult addMedical(@Validated medical m) {
             handle=medicalService.addMedical(m);
             Result.setStatus(handle.getStatus());
@@ -37,9 +38,9 @@ public class medicalController {
             return Result;
     }
 
-    //////////更新
     @PutMapping("/medical")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "更新医疗机构")
     public ResponseResult updateMedical(@Validated medical m) {
             handle=medicalService.updateMedical(m);
             Result.setStatus(handle.getStatus());
@@ -50,6 +51,7 @@ public class medicalController {
     //编辑前查
     @GetMapping("/medical")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "查找医疗机构")
     public ResponseResult queryMedicalById(medical m) {
             Result.setData(medicalService.findMedicalById(m.getMedicalId()));
             Result.setStatus(ResponseCode.OK.getCode());
@@ -60,6 +62,7 @@ public class medicalController {
 
     @DeleteMapping("/medical")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "删除医疗机构")
     public ResponseResult deleteMedicalById(medical m) {
             handle=medicalService.deleteMedicalById(m.getMedicalId());
             Result.setStatus(handle.getStatus());
@@ -69,6 +72,7 @@ public class medicalController {
 
     @GetMapping("/medical/all")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "获取全部医疗机构列表")
     public ResponseResult getAllMedical() {
             Result.setData( medicalService.getAllMedical());
             Result.setStatus(ResponseCode.OK.getCode());
@@ -77,9 +81,9 @@ public class medicalController {
     }
 
 
-    //////////分页查
     @GetMapping("/medical/page")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "获取医疗机构分页列表")
     public ResponseResult queryMedicalByPage(medical m) {
             Result.setData(medicalService.findMedicalByPage(m.getNowPage(), m.getPageSize()));
             Result.setStatus(ResponseCode.OK.getCode());

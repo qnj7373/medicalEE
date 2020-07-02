@@ -5,6 +5,7 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.wzxy.breeze.common.annotation.MedicalLog;
 import org.wzxy.breeze.core.model.dto.chronicdisDto;
 import org.wzxy.breeze.core.model.po.HandleResult;
 import org.wzxy.breeze.core.model.vo.ResponseCode;
@@ -29,6 +30,7 @@ public class chronicdisController {
     //////////新增
     @PostMapping("/chronicdis")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "新增慢性病信息")
     public ResponseResult addChronicdis(@Validated chronicdisDto chronDto) {
             handle=chronicdisService.addChronicdis(chronDto);
             Result.setStatus(handle.getStatus());
@@ -36,9 +38,9 @@ public class chronicdisController {
             return Result;
     }
 
-    //////////更新
     @PutMapping("/chronicdis")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "更新慢性病信息")
     public ResponseResult updateChronicdis(@Validated chronicdisDto chronDto) {
             handle=chronicdisService.updateChronicdis(chronDto);
             Result.setStatus(handle.getStatus());
@@ -46,9 +48,9 @@ public class chronicdisController {
             return Result;
     }
 
-    //编辑前查
     @GetMapping("/chronicdis")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "查找慢性病信息")
     public ResponseResult queryChronicdisById(chronicdisDto chronDto) {
             Result.setData(chronicdisService.findChronicdisById(chronDto.getIllcode()));
             Result.setStatus(ResponseCode.OK.getCode());
@@ -59,6 +61,7 @@ public class chronicdisController {
 
     @DeleteMapping("/chronicdis")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "删除慢性病信息")
     public ResponseResult deleteChronicdisById(chronicdisDto chronDto) {
             handle=chronicdisService.deleteChronicdisById(chronDto.getIllcode());
             Result.setStatus(handle.getStatus());
@@ -68,6 +71,7 @@ public class chronicdisController {
 
     @GetMapping("/chronicdis/all")
     @RequiresRoles(value={"乡镇农合经办人","超级管理员"},logical = Logical.OR)
+    @MedicalLog(description = "获取全部慢性病列表")
     public ResponseResult getAllChronicdis() {
             Result.setData(chronicdisService.getAllChronicdis());
             Result.setStatus(ResponseCode.OK.getCode());
@@ -76,9 +80,9 @@ public class chronicdisController {
     }
 
 
-    //////////分页查
     @GetMapping("/chronicdis/page")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "获取慢性病分页列表")
     public ResponseResult queryChronicdisByPage(chronicdisDto chronDto) {
             Result.setData(chronicdisService.findChronicdisByPage(chronDto.getNowPage(), chronDto.getPageSize()));
             Result.setStatus(ResponseCode.OK.getCode());

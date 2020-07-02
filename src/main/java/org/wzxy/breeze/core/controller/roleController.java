@@ -5,6 +5,7 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.wzxy.breeze.common.annotation.MedicalLog;
 import org.wzxy.breeze.core.model.dto.RoleDto;
 import org.wzxy.breeze.core.model.po.HandleResult;
 import org.wzxy.breeze.core.model.vo.ResponseCode;
@@ -37,18 +38,21 @@ public class roleController {
     private  ResponseResult Result ;
    @Autowired
     private HandleResult handle ;
-    //////////新增
+
     @PostMapping("/role")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "新增角色")
     public ResponseResult addRole(@Validated RoleDto roleDto) {
             handle= roleService.addRole(roleDto);
             Result.setStatus(handle.getStatus());
             Result.setMessage(handle.getMessage());
             return Result;
     }
-    //编辑前查
+
+
     @GetMapping("/role")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "获取角色信息")
     public ResponseResult queryRoleById(RoleDto roleDto) {
             Result.setData(roleService.findRoleById(roleDto.getRoleId()));
             Result.setDataBackUp(menuService.getTreeOfHave(roleDto.getRoleId()));
@@ -57,8 +61,10 @@ public class roleController {
             return Result;
     }
 
+
     @PutMapping("/role")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "更新角色")
     public ResponseResult updateRole(@Validated RoleDto roleDto) {
 
             handle= roleService.updateRole(roleDto);
@@ -70,6 +76,7 @@ public class roleController {
 
     @DeleteMapping("/role")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "删除角色")
     public ResponseResult deleteRoleById(RoleDto roleDto) {
             handle=roleService.deleteRoleById(roleDto.getRoleId());
             Result.setStatus(handle.getStatus());
@@ -79,6 +86,7 @@ public class roleController {
 
     @GetMapping("/role/page")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "获取角色分页列表")
     public ResponseResult getRolesPage(RoleDto roleDto) {
             Result.setData(
                     roleService.findRoleByPage
@@ -93,6 +101,7 @@ public class roleController {
 
     @GetMapping("/role/toadd")
     @RequiresRoles("超级管理员")
+    @MedicalLog(description = "获取新增用户所需信息")
     public ResponseResult getRolesToAdd() {
             Result.setData(roleService.getAllRole());
             Result.setDataBackUp(organService.getAllOrgans());
@@ -100,10 +109,6 @@ public class roleController {
             Result.setMessage("获取新增用户所需信息成功！");
             return Result;
     }
-
-
-
-
 
 
 
