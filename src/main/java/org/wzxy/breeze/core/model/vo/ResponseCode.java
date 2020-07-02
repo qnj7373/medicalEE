@@ -11,6 +11,7 @@ import java.io.Serializable;
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
  public  enum  ResponseCode implements Serializable {
 
+    NOTING(0),
     OK(200),
     FAIL(201),
     ERROR(-1),

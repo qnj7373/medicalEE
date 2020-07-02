@@ -20,9 +20,4 @@ public interface ICertificateService {
 
     certificateDto findCertById(int  certificateId);
 
-
-
-
-
-
 }

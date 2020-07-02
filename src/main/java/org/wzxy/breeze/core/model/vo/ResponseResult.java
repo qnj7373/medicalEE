@@ -21,6 +21,26 @@ public class ResponseResult<T> implements Serializable {
     public ResponseResult() {
     }
 
+
+    public ResponseResult(String message, String url, T data, T dataBackUp, HashMap<String, T> mapData, int status) {
+        this.message = message;
+        this.url = url;
+        this.data = data;
+        this.dataBackUp = dataBackUp;
+        this.mapData = mapData;
+        this.status = status;
+    }
+
+    public void   clean(){
+        this.message = "";
+        this.url = "";
+        this.data = null;
+        this.dataBackUp = null;
+        this.mapData = null;
+        this.status = ResponseCode.NOTING.getCode();
+    }
+
+
     public String getMessage() {
         return message;
     }
