@@ -15,9 +15,9 @@
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  springboot环境
+2.  shiro作为安全管理框架，redis作为缓存
+3.  aop实现简单日志管理
 
 #### 参与贡献
 
