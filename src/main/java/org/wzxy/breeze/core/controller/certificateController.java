@@ -44,11 +44,10 @@ public class certificateController {
     @RequiresRoles("乡镇农合经办人")
     @MedicalLog(description = "获取慢性病证分页列表")
     public ResponseResult queryCertByPage(certificateDto certDto) {
-            Result.setData(
-           certService.findCertByPage(Status.getMyRegionId(), certDto.getNowPage(), certDto.getPageSize())
-            );
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("获取慢性病证分页列表成功！");
+        Result.renderResult(ResponseCode.OK.getCode(),
+                "获取慢性病证分页列表成功！",
+                certService.findCertByPage(Status.getMyRegionId(), certDto.getNowPage(), certDto.getPageSize())
+        );
             return Result;
     }
 
@@ -58,8 +57,7 @@ public class certificateController {
     @MedicalLog(description = "新增慢性病证")
     public ResponseResult addCert(@Validated certificateDto certDto) {
             handle= certService.addCert(certDto,Status.getMyRegionId()) ;
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
@@ -68,8 +66,7 @@ public class certificateController {
     @MedicalLog(description = "删除慢性病证")
     public ResponseResult deleteCertById(certificateDto certDto) {
             handle=certService.deleteCertById(certDto.getCertificateId());
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+             Result.renderResult(handle);
             return Result;
     }
 
@@ -79,10 +76,11 @@ public class certificateController {
     @RequiresRoles("乡镇农合经办人")
     @MedicalLog(description = "查找慢性病证信息")
     public ResponseResult queryCertById(certificateDto certDto) {
-            Result.setData( certService.findCertById(certDto.getCertificateId()));
-            Result.setDataBackUp(chronicdisService.getAllChronicdis());
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("查找慢性病证信息成功！");
+            Result.renderResult(ResponseCode.OK.getCode(),
+                    "查找慢性病证信息成功！",
+                    certService.findCertById(certDto.getCertificateId()),
+                    chronicdisService.getAllChronicdis()
+                    );
             return Result;
     }
 
@@ -92,8 +90,7 @@ public class certificateController {
     @MedicalLog(description = "更新慢性病证信息")
     public ResponseResult updateCert(@Validated certificateDto certDto) {
             handle= certService.updateCert(certDto,Status.getMyRegionId());
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+             Result.renderResult(handle);
             return Result;
     }
 

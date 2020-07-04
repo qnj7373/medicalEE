@@ -71,6 +71,7 @@
                    window.location.href="/"+result.data.url;
 			   }else {
                   messageError(result.data.message);
+                  this.loginUser.upwd="";
 			   }
            },function(res){
 

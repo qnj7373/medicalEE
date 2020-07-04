@@ -11,8 +11,11 @@ public class getUId {
 
     public static int getid(){
         Subject subject = SecurityUtils.getSubject();
-        int id= Integer.parseInt(subject.getPrincipal().toString());
-        return id;
+        if(subject.getPrincipal()!=null){
+            int id= Integer.parseInt(subject.getPrincipal().toString());
+            return id;
+        }
+        return 0;
     }
 
 }

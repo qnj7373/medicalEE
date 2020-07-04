@@ -22,6 +22,11 @@ public class MenuFactory {
     }
 
     @Bean
+    public MenuDto createMenuDto() {
+        return new MenuDto();
+    }
+
+    @Bean
     public Page<MenuDto> createMenuPage() {
         return new Page<MenuDto>();
     }

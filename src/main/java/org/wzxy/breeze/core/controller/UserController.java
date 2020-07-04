@@ -26,8 +26,6 @@ public class UserController  {
 	@Autowired
 	private  Page<UserDto> userDtopage;
 	@Autowired
-	private loginUser luser;
-	@Autowired
 	private IUserService userService;
 	@Autowired
 	private IOrganizationService organService;
@@ -44,9 +42,11 @@ public class UserController  {
 	@MedicalLog(description = "获取用户分页列表")
 	public ResponseResult queryUsersByPage(UserDto userDto) {
 			userDtopage = userService.UserPaging(userDto.getNowPage(), userDto.getPageSize());
-			Result.setData(userDtopage);
-			Result.setStatus(ResponseCode.OK.getCode());
-			Result.setMessage("获取用户分页列表成功！");
+			Result.renderResult(
+					ResponseCode.OK.getCode(),
+					"获取用户分页列表成功！",
+					userDtopage
+			);
 			return Result;
 	}
 
@@ -56,8 +56,7 @@ public class UserController  {
 	@MedicalLog(description = "新增用户")
 	public ResponseResult AddUser(@Validated  UserDto userDto) {
 			handle=userService.addUser(userDto);
-			Result.setStatus(handle.getStatus());
-			Result.setMessage(handle.getMessage());
+			Result.renderResult(handle);
 			 return Result;
 	}
 
@@ -66,13 +65,15 @@ public class UserController  {
 	@MedicalLog(description = "查找用户")
 	public ResponseResult queryUserById(UserDto userDto) {
 			userDto=userService.queryUserById(userDto.getUid());
-			Result.setData(userDto);
 			Map<String,Object> map = new HashMap<>();
 			map.put("organs", organService.getOrganOfHave(userDto.getUid()));
 			map.put("roles", roleService.getRolesOfHave(userDto.getUid()));
-			Result.setDataBackUp(map);
-			Result.setStatus(ResponseCode.OK.getCode());
-			Result.setMessage("查找用户成功！");
+			Result.renderResult(
+					ResponseCode.OK.getCode(),
+					"查找用户成功！",
+					userDto,
+					map
+			);
 			return Result;
 	}
 
@@ -81,10 +82,8 @@ public class UserController  {
 	@RequiresRoles("超级管理员")
 	@MedicalLog(description = "更新用户")
 	public ResponseResult updateUser(@Validated  UserDto userDto) {
-
 			handle=	userService.updateUser(userDto);
-			Result.setStatus(handle.getStatus());
-			Result.setMessage(handle.getMessage());
+			Result.renderResult(handle);
 			return Result;
 	}
 
@@ -92,10 +91,8 @@ public class UserController  {
 	   @RequiresRoles("超级管理员")
 	   @MedicalLog(description = "删除用户")
 		public ResponseResult deleteUserById(UserDto userDto) {
-
 				handle=userService.deleteUserById(userDto.getUid());
-				Result.setStatus(handle.getStatus());
-				Result.setMessage(handle.getMessage());
+				Result.renderResult(handle);
 				return Result;
 		}
 

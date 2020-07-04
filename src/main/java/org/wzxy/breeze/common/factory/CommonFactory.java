@@ -4,6 +4,7 @@ package org.wzxy.breeze.common.factory;
         import org.slf4j.LoggerFactory;
         import org.springframework.context.annotation.Bean;
         import org.springframework.context.annotation.Configuration;
+        import org.wzxy.breeze.common.utils.getUId;
         import org.wzxy.breeze.core.model.po.HandleResult;
         import org.wzxy.breeze.core.model.vo.ResponseResult;
 
@@ -28,4 +29,6 @@ public class CommonFactory {
     public ResponseResult createResponseResult() {
         return new ResponseResult();
     }
+
+
 }

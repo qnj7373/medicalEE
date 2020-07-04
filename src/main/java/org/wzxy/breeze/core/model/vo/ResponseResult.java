@@ -1,6 +1,7 @@
 package org.wzxy.breeze.core.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.wzxy.breeze.core.model.po.HandleResult;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -30,6 +31,56 @@ public class ResponseResult<T> implements Serializable {
         this.mapData = mapData;
         this.status = status;
     }
+
+
+    public void renderResult(HandleResult handler) {
+        this.message = handler.getMessage();
+        this.status = handler.getStatus();
+    }
+
+    public void renderResult(int status,String message, String url) {
+        this.message = message;
+        this.url = url;
+        this.status = status;
+    }
+
+
+    public void renderResult(int status,String message,  T data) {
+        this.message = message;
+        this.data = data;
+        this.status = status;
+    }
+
+
+    public void renderResult(int status,String message, T data, HashMap<String, T> mapData) {
+        this.message = message;
+        this.data = data;
+        this.mapData = mapData;
+        this.status = status;
+    }
+
+
+    public void renderResult(int status,String message,T data, T dataBackUp) {
+        this.message = message;
+        this.data = data;
+        this.dataBackUp = dataBackUp;
+        this.status = status;
+    }
+
+
+
+
+    public void renderResult(int status,String message, String url, T data, T dataBackUp, HashMap<String, T> mapData) {
+        this.message = message;
+        this.url = url;
+        this.data = data;
+        this.dataBackUp = dataBackUp;
+        this.mapData = mapData;
+        this.status = status;
+    }
+
+
+
 
     public void   clean(){
         this.message = "";

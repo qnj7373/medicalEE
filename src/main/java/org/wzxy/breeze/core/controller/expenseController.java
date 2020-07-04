@@ -31,39 +31,35 @@ public class expenseController {
     @Autowired
     private HandleResult handle;
 
-    //////////新增
     @PostMapping("/expense")
     @RequiresRoles("乡镇农合经办人")
     @MedicalLog(description = "新增报销信息")
     public ResponseResult addExpense(@Validated  expenseDto eDto) {
             handle=expenseService.addExpense(eDto,Status.getAdministrationId() );
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
-    //编辑前查
     @GetMapping("/expense")
     @RequiresRoles(value={"乡镇农合经办人","县合管办经办人"},logical = Logical.OR)
     @MedicalLog(description = "查找报销信息")
     public ResponseResult queryExpenseById(expenseDto eDto) {
-            Result.setData(
-             expenseService.findExpenseById(eDto.getId())
-            );
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("查找报销信息成功！");
+
+            Result.renderResult(ResponseCode.OK.getCode(),
+                    "查找报销信息成功！",
+                    expenseService.findExpenseById(eDto.getId())
+                    );
+
             return Result;
     }
 
 
-    //////////更新
     @PutMapping("/expense")
     @RequiresRoles("县合管办经办人")
     @MedicalLog(description = "更新报销信息")
     public ResponseResult updateExpense(expenseDto eDto) {
             handle= expenseService.updateExpenseState(eDto);
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
@@ -73,27 +69,24 @@ public class expenseController {
     @MedicalLog(description = "删除报销信息")
     public ResponseResult deleteExpenseById(expenseDto eDto) {
             handle=expenseService.deleteExpenseById(eDto.getId());
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
 
 
-    //////////分页查
     @GetMapping("/expense/page")
     @RequiresRoles(value={"乡镇农合经办人","县合管办经办人"},logical = Logical.OR)
     @MedicalLog(description = "获取报销信息分页列表")
     public ResponseResult queryExpenseByPage(expenseDto eDto) {
-            Result.setData(
+            Result.renderResult(ResponseCode.OK.getCode(),
+                    "获取报销信息分页列表成功！",
                     expenseService.findExpenseByPage(
                             Status.getAdministrationId(),
                             eDto.getState(),
                             eDto.getNowPage(), eDto.getPageSize()
                     )
             );
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("获取报销信息分页列表成功！");
             return Result;
     }
 

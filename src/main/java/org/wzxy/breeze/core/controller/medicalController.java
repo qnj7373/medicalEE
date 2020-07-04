@@ -33,8 +33,7 @@ public class medicalController {
     @MedicalLog(description = "新增医疗机构")
     public ResponseResult addMedical(@Validated medical m) {
             handle=medicalService.addMedical(m);
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
@@ -43,19 +42,17 @@ public class medicalController {
     @MedicalLog(description = "更新医疗机构")
     public ResponseResult updateMedical(@Validated medical m) {
             handle=medicalService.updateMedical(m);
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
-    //编辑前查
     @GetMapping("/medical")
     @RequiresRoles("超级管理员")
     @MedicalLog(description = "查找医疗机构")
     public ResponseResult queryMedicalById(medical m) {
-            Result.setData(medicalService.findMedicalById(m.getMedicalId()));
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("查找医疗机构成功！");
+            Result.renderResult(ResponseCode.OK.getCode(),
+                    "查找医疗机构成功！",
+                    medicalService.findMedicalById(m.getMedicalId()));
             return Result;
     }
 
@@ -65,8 +62,7 @@ public class medicalController {
     @MedicalLog(description = "删除医疗机构")
     public ResponseResult deleteMedicalById(medical m) {
             handle=medicalService.deleteMedicalById(m.getMedicalId());
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
@@ -74,9 +70,9 @@ public class medicalController {
     @RequiresRoles("超级管理员")
     @MedicalLog(description = "获取全部医疗机构列表")
     public ResponseResult getAllMedical() {
-            Result.setData( medicalService.getAllMedical());
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("获取全部医疗机构列表成功！");
+            Result.renderResult(ResponseCode.OK.getCode(),
+                    "获取全部医疗机构列表成功！",
+                    medicalService.getAllMedical());
             return Result;
     }
 
@@ -85,9 +81,12 @@ public class medicalController {
     @RequiresRoles("超级管理员")
     @MedicalLog(description = "获取医疗机构分页列表")
     public ResponseResult queryMedicalByPage(medical m) {
-            Result.setData(medicalService.findMedicalByPage(m.getNowPage(), m.getPageSize()));
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("获取医疗机构分页列表成功！");
+            Result.renderResult(ResponseCode.OK.getCode(),
+                    "获取医疗机构分页列表成功！",
+                    medicalService.findMedicalByPage(
+                            m.getNowPage(), m.getPageSize()
+                    )
+            );
             return Result;
     }
 

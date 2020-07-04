@@ -55,11 +55,10 @@ public class LoginController {
             u.setUid(loginUser.getUid());
             List<User> userByFactor = UserService.findUserByFactor(u);
             if(userByFactor!=null){
-                Result.setUrl("Index");
+                Result.renderResult(ResponseCode.OK.getCode(),
+                        "登录成功了~欢迎你!",
+                        "Index");
             }
-
-        Result.setStatus(ResponseCode.OK.getCode());
-        Result.setMessage("登录成功了~欢迎你!");
         return Result;
 
     }
@@ -70,9 +69,9 @@ public class LoginController {
     @MedicalLog(description = "用户获取菜单")
     public ResponseResult getMenusIndex() {
 
-            Result.setData(MenuService.getMenusIndex(getUId.getid()));
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("获取菜单成功！");
+            Result.renderResult(ResponseCode.OK.getCode(),
+                    "获取菜单成功！",
+                    MenuService.getMenusIndex(getUId.getid()));
             return Result;
 
     }

@@ -35,11 +35,12 @@ public class organController  {
     @RequiresRoles("超级管理员")
     @MedicalLog(description = "获取农合经办点分页列表")
     public ResponseResult queryOrgansByPage(OrganizationDto organDto) {
-            Result.setData(
-               organService.findOrganByPage(organDto.getNowPage(),organDto.getPageSize() )
-            );
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("获取农合经办点分页列表成功！");
+        Result.renderResult(ResponseCode.OK.getCode(),
+                "获取农合经办点分页列表成功！",
+                organService.findOrganByPage(
+                        organDto.getNowPage(),organDto.getPageSize()
+                )
+                );
             return Result;
 
     }
@@ -49,10 +50,11 @@ public class organController  {
     @RequiresRoles("超级管理员")
     @MedicalLog(description = "获取全部机构")
     public ResponseResult getAllOrgans() {
-            Result.setData(organService.getAllOrgans());
-            Result.setDataBackUp(regionService.getAllRegions());
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("获取全部机构成功！");
+        Result.renderResult(ResponseCode.OK.getCode(),
+                "获取全部机构成功！",
+                organService.getAllOrgans(),
+                regionService.getAllRegions()
+        );
             return Result;
     }
 
@@ -60,9 +62,10 @@ public class organController  {
     @RequiresRoles("超级管理员")
     @MedicalLog(description = "获取机构树")
     public ResponseResult getOrgans() {
-            Result.setData(organService.getTreeOfAdd());
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("获取机构树成功！");
+        Result.renderResult(ResponseCode.OK.getCode(),
+                "获取机构树成功！",
+                organService.getTreeOfAdd()
+        );
             return Result;
     }
 
@@ -71,8 +74,7 @@ public class organController  {
     @MedicalLog(description = "新增机构")
     public ResponseResult AddOrgan(@Validated OrganizationDto organDto) {
             handle=organService.addOrgan(organDto);
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
@@ -81,13 +83,14 @@ public class organController  {
     @RequiresRoles("超级管理员")
     @MedicalLog(description = "查找机构")
     public ResponseResult queryOrganById(OrganizationDto organDto) {
-            Result.setData(organService.queryOrganById(organDto.getAdministrationId()));
             Map<String,Object> map = new HashMap<>();
             map.put("organs", organService.getAllOrgans());
             map.put("regions", regionService.getAllRegions());
-            Result.setDataBackUp(map);
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("查找农合经办点成功！");
+            Result.renderResult(ResponseCode.OK.getCode(),
+                    "查找农合经办点成功！",
+                    organService.queryOrganById(organDto.getAdministrationId()),
+                    map
+            );
             return Result;
     }
 
@@ -97,8 +100,7 @@ public class organController  {
     @MedicalLog(description = "更新机构")
     public ResponseResult updateOrgan(@Validated OrganizationDto organDto) {
             handle= organService.updateOrgan(organDto);
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
@@ -108,8 +110,7 @@ public class organController  {
     @MedicalLog(description = "删除机构")
     public ResponseResult deleteOrgan(OrganizationDto organDto) {
             handle= organService.deleteOrganById(organDto.getAdministrationId());
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 

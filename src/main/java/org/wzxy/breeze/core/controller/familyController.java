@@ -37,13 +37,14 @@ public class familyController  {
     @RequiresRoles(value={"乡镇农合经办人","县合管办经办人","县合管办领导"},logical = Logical.OR)
     @MedicalLog(description = "获取家庭档案分页列表")
     public ResponseResult queryFamilyByPage(FamilyDto familyDto) {
-            Result.setData(
+            Result.renderResult(ResponseCode.OK.getCode(),
+                    "获取家庭档案分页列表成功！",
                     familyService.findFamilyByPage(
-                    Status.getMyRegionId(), familyDto.getNowPage(), familyDto.getPageSize()
+                            Status.getMyRegionId(),
+                            familyDto.getNowPage(),
+                            familyDto.getPageSize()
                     )
             );
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("获取家庭档案分页列表成功！");
             return Result;
     }
 
@@ -53,8 +54,7 @@ public class familyController  {
     @MedicalLog(description = "新增家庭档案")
     public ResponseResult addFamily(@Validated  FamilyDto familyDto) {
             handle= familyService.addFamily(familyDto);
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
@@ -63,22 +63,21 @@ public class familyController  {
     @MedicalLog(description = "删除家庭档案")
     public ResponseResult deleteFamilyById(FamilyDto familyDto) {
             handle=familyService.deleteFamilyById(familyDto.getFamicode());
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
 
 
-    //编辑前查
     @GetMapping("/family")
     @RequiresRoles(value={"乡镇农合经办人","县合管办经办人","县合管办领导"},logical = Logical.OR)
     @MedicalLog(description = "查找家庭档案")
     public ResponseResult queryFamilyById(FamilyDto familyDto) {
-            Result.setData(familyService.findFamilyById(familyDto.getFamicode()));
             Result.setDataBackUp(regionService.getOwnRegions(Status.getMyRegionId()));
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("查找家庭档案信息成功！");
+            Result.renderResult(ResponseCode.OK.getCode(),
+                    "查找家庭档案信息成功！",
+                    familyService.findFamilyById(familyDto.getFamicode())
+                    );
             return Result;
     }
 
@@ -88,8 +87,7 @@ public class familyController  {
     @MedicalLog(description = "更新家庭档案")
     public ResponseResult updateFamily(@Validated FamilyDto familyDto) {
             handle= familyService.updateFamily(familyDto);
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 

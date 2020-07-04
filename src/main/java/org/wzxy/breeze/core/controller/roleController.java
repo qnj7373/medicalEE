@@ -44,8 +44,7 @@ public class roleController {
     @MedicalLog(description = "新增角色")
     public ResponseResult addRole(@Validated RoleDto roleDto) {
             handle= roleService.addRole(roleDto);
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
@@ -54,10 +53,12 @@ public class roleController {
     @RequiresRoles("超级管理员")
     @MedicalLog(description = "获取角色信息")
     public ResponseResult queryRoleById(RoleDto roleDto) {
-            Result.setData(roleService.findRoleById(roleDto.getRoleId()));
-            Result.setDataBackUp(menuService.getTreeOfHave(roleDto.getRoleId()));
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("获取修改角色所需信息成功！");
+            Result.renderResult(
+                    ResponseCode.OK.getCode(),
+                    "获取修改角色所需信息成功！",
+                    roleService.findRoleById(roleDto.getRoleId()),
+                    menuService.getTreeOfHave(roleDto.getRoleId())
+            );
             return Result;
     }
 
@@ -68,8 +69,7 @@ public class roleController {
     public ResponseResult updateRole(@Validated RoleDto roleDto) {
 
             handle= roleService.updateRole(roleDto);
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
@@ -79,8 +79,7 @@ public class roleController {
     @MedicalLog(description = "删除角色")
     public ResponseResult deleteRoleById(RoleDto roleDto) {
             handle=roleService.deleteRoleById(roleDto.getRoleId());
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
@@ -88,12 +87,14 @@ public class roleController {
     @RequiresRoles("超级管理员")
     @MedicalLog(description = "获取角色分页列表")
     public ResponseResult getRolesPage(RoleDto roleDto) {
-            Result.setData(
+            Result.renderResult(
+                    ResponseCode.OK.getCode(),
+                    "获取角色列表成功！",
                     roleService.findRoleByPage
-                            (roleDto.getNowPage(),roleDto.getPageSize())
-                    );
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("获取角色列表成功！");
+                            (
+                             roleDto.getNowPage(),roleDto.getPageSize()
+                            )
+            );
             return Result;
     }
 
@@ -103,10 +104,12 @@ public class roleController {
     @RequiresRoles("超级管理员")
     @MedicalLog(description = "获取新增用户所需信息")
     public ResponseResult getRolesToAdd() {
-            Result.setData(roleService.getAllRole());
-            Result.setDataBackUp(organService.getAllOrgans());
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("获取新增用户所需信息成功！");
+            Result.renderResult(
+                    ResponseCode.OK.getCode(),
+                    "获取新增用户所需信息成功！",
+                    roleService.getAllRole(),
+                    organService.getAllOrgans()
+            );
             return Result;
     }
 

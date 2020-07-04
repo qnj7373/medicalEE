@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.wzxy.breeze.common.annotation.MedicalLog;
+import org.wzxy.breeze.common.utils.getUId;
+import org.wzxy.breeze.core.service.serviceImpl.getStatusService;
 
 import java.lang.reflect.Method;
 
@@ -31,7 +33,7 @@ public class MedicalLogAspect {
 
     @Before("log()")
     public void printLog(JoinPoint joinPoint){
-        logger.info(this.getMethodLogValue(joinPoint));
+        logger.info("用户： "+getUId.getid()+"---"+this.getMethodLogValue(joinPoint));
     }
 
 

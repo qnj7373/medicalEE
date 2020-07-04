@@ -34,8 +34,7 @@ public class paymentController {
     @MedicalLog(description = "新增参合信息")
     public ResponseResult addPayment(@Validated paymentDto payDto) {
             handle=paymentService.addPayment(payDto);
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
@@ -44,8 +43,7 @@ public class paymentController {
     @MedicalLog(description = "更新参合信息")
     public ResponseResult updatePayment(@Validated paymentDto payDto) {
             handle=paymentService.updatePayment(payDto);
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
@@ -53,11 +51,10 @@ public class paymentController {
     @RequiresRoles("乡镇农合经办人")
     @MedicalLog(description = "查找参合信息")
     public ResponseResult queryPaymentById(paymentDto payDto) {
-            Result.setData(
+            Result.renderResult(ResponseCode.OK.getCode(),
+                    "查找参合登记信息成功！",
                     paymentService.findPaymentById(payDto.getPaymentId())
-                    );
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("查找参合登记信息成功！");
+            );
             return Result;
     }
 
@@ -67,8 +64,7 @@ public class paymentController {
     @MedicalLog(description = "删除参合信息")
     public ResponseResult deletePaymentById(paymentDto payDto) {
             handle=paymentService.deletePaymentById(payDto.getPaymentId());
-            Result.setStatus(handle.getStatus());
-            Result.setMessage(handle.getMessage());
+            Result.renderResult(handle);
             return Result;
     }
 
@@ -78,10 +74,14 @@ public class paymentController {
     @RequiresRoles("乡镇农合经办人")
     @MedicalLog(description = "获取慢性病分页列表")
     public ResponseResult queryPaymentByPage(paymentDto payDto) {
-            Result.setData(
-                    paymentService.findPaymentByPage(Status.getMyRegionId(), payDto.getNowPage(), payDto.getPageSize() ) );
-            Result.setStatus(ResponseCode.OK.getCode());
-            Result.setMessage("获取慢性病分页列表成功！");
+        Result.renderResult(ResponseCode.OK.getCode(),
+                "获取慢性病分页列表成功！",
+                paymentService.findPaymentByPage(
+                        Status.getMyRegionId(),
+                        payDto.getNowPage(),
+                        payDto.getPageSize()
+                )
+        );
             return Result;
     }
 
