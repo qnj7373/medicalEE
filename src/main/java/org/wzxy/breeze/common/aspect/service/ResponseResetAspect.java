@@ -1,4 +1,4 @@
-package org.wzxy.breeze.common.aspect;
+package org.wzxy.breeze.common.aspect.service;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

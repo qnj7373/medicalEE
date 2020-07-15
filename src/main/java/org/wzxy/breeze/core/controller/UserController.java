@@ -87,6 +87,15 @@ public class UserController  {
 			return Result;
 	}
 
+    @PutMapping("/user/resetPassword")
+	@RequiresRoles("超级管理员")
+	@MedicalLog(description = "重置用户密码")
+	public ResponseResult resetUserPwd(UserDto userDto) {
+			handle=	userService.resetPassword(userDto);
+			Result.renderResult(handle);
+			return Result;
+	}
+
 	   @DeleteMapping("/user")
 	   @RequiresRoles("超级管理员")
 	   @MedicalLog(description = "删除用户")

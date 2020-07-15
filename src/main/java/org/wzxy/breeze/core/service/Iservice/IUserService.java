@@ -16,6 +16,8 @@ public interface IUserService {
 
    public HandleResult updateUser(UserDto userdto) ;
 
+   public HandleResult resetPassword(UserDto userdto) ;
+
    public HandleResult addUser(UserDto userdto) ;
 
    public Page<UserDto> UserPaging(int nowPage, int pageSize) ;

@@ -32,7 +32,7 @@
 				<th>所属机构</th>
 				<th>用户账号</th>
 				<th>用户姓名</th>
-				<th>用户密码</th>
+				<th>用户密码密文</th>
 				<th>操作</th>
 			</thead>
 			<tbody>
@@ -46,6 +46,10 @@
 					        @click="userEdit(item)">
 						<i class="layui-icon">&#xe642;</i>
 						编辑</button>
+					<button class="layui-btn layui-btn-default layui-btn-xs"
+					        @click="resetPassword(item)">
+						<i class="layui-icon">&#xe9aa;</i>
+						重置密码</button>
 					<button class="layui-btn layui-btn-danger layui-btn-xs"  v-on:click="removeMember(item)">
 						<i class="layui-icon">&#xe640;</i>
 						删除
@@ -155,7 +159,11 @@
             },
 			userEdit: function (item) {
 				x_open_full('编辑用户','userEdit.html?#'+item.uid);
-			}
+			},
+            resetPassword: function (item) {
+                x_open_full('重置用户密码','resetPassword.html?#'+item.uid);
+            }
+
 		}
     }); //end Vue
 

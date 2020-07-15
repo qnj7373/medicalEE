@@ -1,6 +1,7 @@
 package org.wzxy.breeze.common.shiro;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -9,6 +10,7 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.wzxy.breeze.common.model.entity.Encryption;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,11 +31,27 @@ public class shiroConfig {
         return  defaultAAP;
     }
 
+    /**
+     * 凭证匹配器
+     * 密码校验交给Shiro的SimpleAuthenticationInfo进行处理
+     */
+
+    @Bean
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        //散列算法:这里使用MD5算法;
+        hashedCredentialsMatcher.setHashAlgorithmName(Encryption.ENCRYPTWAY.stringValue());
+        //散列的次数;
+        hashedCredentialsMatcher.setHashIterations(Encryption.TIMES.numValue());
+        return hashedCredentialsMatcher;
+    }
+
     //将自己的验证方式加入容器
     @Bean
-    public  myRealm  myshiroRealm(){
-        myRealm myRea= new myRealm();
-        return  myRea;
+    public shiroRealm shiroRealm(){
+        shiroRealm Realm= new shiroRealm();
+        Realm.setCredentialsMatcher(hashedCredentialsMatcher());
+        return  Realm;
     }
 
     //权限管理，配置主要是Realm的管理认证
@@ -41,7 +59,7 @@ public class shiroConfig {
     public SecurityManager securityManager(){
         DefaultWebSecurityManager securityManager
                 = new DefaultWebSecurityManager();
-        securityManager.setRealm(myshiroRealm());
+        securityManager.setRealm(shiroRealm());
         SecurityUtils.setSecurityManager(securityManager);
         return securityManager;
     }
@@ -52,7 +70,6 @@ public class shiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         //未登录
         shiroFilterFactoryBean.setLoginUrl("/system/notLogin");
-        //shiroFilterFactoryBean.setLoginUrl("/pages/login.html");
         Map<String,String> map = new LinkedHashMap<String, String>();
         //登录
         map.put("/system/login", "anon");
@@ -66,8 +83,6 @@ public class shiroConfig {
         map.put("/logout", "logout");
         //对所有用户认证
        map.put("/**", "authc");
-        //首页
-       // shiroFilterFactoryBean.setSuccessUrl("/index");
         //错误页面，认证不通过跳转
         shiroFilterFactoryBean.setUnauthorizedUrl("/error");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);

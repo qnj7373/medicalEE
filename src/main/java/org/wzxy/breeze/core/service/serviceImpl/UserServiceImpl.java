@@ -1,10 +1,12 @@
 package org.wzxy.breeze.core.service.serviceImpl;
 
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.wzxy.breeze.common.utils.PwdEncryption;
 import org.wzxy.breeze.core.model.po.HandleResult;
 import org.wzxy.breeze.core.model.po.User;
 import org.wzxy.breeze.core.mapper.rolesMapper;
@@ -110,8 +112,7 @@ public class UserServiceImpl  implements IUserService {
 			if(!("".equals(tempistrationId))){
 				userdto.setAdministrationId(Integer.parseInt(tempistrationId));
 			}
-
-			if(userDao.updateUser( new User(userdto))){
+			if(userDao.updateUser(new User(userdto))){
 				handle.setStatus(ResponseCode.OK.getCode());
 				handle.setMessage("更新用户成功!");
 			}else{
@@ -145,11 +146,41 @@ public class UserServiceImpl  implements IUserService {
 
 	@Override
 	@CacheEvict(cacheNames = "userZone",allEntries = true)
+	public HandleResult resetPassword(UserDto userdto) {
+		exist=userDao.isExist(userdto.getUid());
+		if (exist==1){
+			User resetUser =  new User(userdto);
+			String salt =  new SecureRandomNumberGenerator().nextBytes().toString();
+			resetUser.setUpwd(PwdEncryption.Encrypt(userdto.getUpwd(), salt));
+			resetUser.setSalt(salt);
+			if(userDao.resetPassword(resetUser)){
+				handle.setStatus(ResponseCode.OK.getCode());
+				handle.setMessage("重置用户密码成功!");
+			}else{
+				handle.setStatus(ResponseCode.FAIL.getCode());
+				handle.setMessage("重置用户密码失败!");
+			}
+			return handle;
+
+		}else{
+			handle.setStatus(ResponseCode.FAIL.getCode());
+			handle.setMessage("重置密码失败，用户不存在!");
+			return handle;
+		}
+	}
+
+
+
+	@Override
+	@CacheEvict(cacheNames = "userZone",allEntries = true)
 	public HandleResult addUser(UserDto userdto) {
 		exist=userDao.isExist(userdto.getUid());
 		if (exist==0){
 			userdto.setAdministrationId(Integer.parseInt(userdto.getTempistrationId()));
 			User addUser =  new User(userdto);
+			String salt =  new SecureRandomNumberGenerator().nextBytes().toString();
+			addUser.setUpwd(PwdEncryption.Encrypt(userdto.getUpwd(), salt));
+			addUser.setSalt(salt);
 				if(userDao.addUser(addUser)){
 					handle.setStatus(ResponseCode.OK.getCode());
 					handle.setMessage("新增用户成功!");

@@ -137,6 +137,7 @@
             <artifactId>shiro-spring</artifactId>
             <version>RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>

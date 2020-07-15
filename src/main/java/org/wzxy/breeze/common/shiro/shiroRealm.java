@@ -1,15 +1,14 @@
 package org.wzxy.breeze.common.shiro;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.wzxy.breeze.common.model.entity.Encryption;
 import org.wzxy.breeze.core.model.po.User;
 import org.wzxy.breeze.core.model.po.menu;
 import org.wzxy.breeze.core.model.po.role;
@@ -22,7 +21,7 @@ import java.util.List;
  * @author 覃能健
  * @create 2020-04
  */
-public class myRealm extends AuthorizingRealm {
+public class shiroRealm extends AuthorizingRealm {
 
     @Autowired
     @Lazy
@@ -64,18 +63,21 @@ public class myRealm extends AuthorizingRealm {
         User user = new User();
         List<User> userList = new ArrayList<>();
         user.setUid(Integer.parseInt(id));
-        user.setUpwd(pwd);
         userList = UserService.findUserByFactor(user);
         if (userList.size()==0){
             //抛出异常
-            return null;
-
+            throw  new AccountException("用户不存在！");
         }else{
             user=userList.get(0);
 
             SimpleAuthenticationInfo simpleAuthenticationInfo =
                     new SimpleAuthenticationInfo
-                    (user.getUid(),user.getUpwd(), this.getName());
+                    (
+                            user.getUid(),
+                            user.getUpwd(),
+                            ByteSource.Util.bytes(Encryption.MEDICALSALT.stringValue()+user.getSalt()),
+                            this.getName()
+                    );
             return simpleAuthenticationInfo;
         }
     }

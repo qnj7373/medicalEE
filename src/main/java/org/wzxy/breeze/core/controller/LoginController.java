@@ -51,14 +51,15 @@ public class LoginController {
             //进行验证，这里捕获异常放至全局异常处理控制器，然后返回相应的信息
             subject.login(upToken);
             subject.getSession().setTimeout(600000L);
-            User u = new User();
+           /* User u = new User();
             u.setUid(loginUser.getUid());
             List<User> userByFactor = UserService.findUserByFactor(u);
             if(userByFactor!=null){
-                Result.renderResult(ResponseCode.OK.getCode(),
-                        "登录成功了~欢迎你!",
-                        "Index");
-            }
+
+            }*/
+        Result.renderResult(ResponseCode.OK.getCode(),
+                "登录成功了~欢迎你!",
+                "Index");
         return Result;
 
     }

@@ -52,8 +52,8 @@ public interface userMapper {
 public User findUserByUid(@Param("uid") int uid);
 
 
-    @Insert("INSERT INTO user (upwd,uname,administrationId) " +
-        " VALUES(#{upwd},#{uname},#{administrationId})")
+    @Insert("INSERT INTO user (upwd,uname,salt,administrationId) " +
+        " VALUES(#{upwd},#{uname},#{salt},#{administrationId})")
     @Options(useGeneratedKeys=true, keyProperty="uid", keyColumn="uid")
     public boolean addUser(User user);
 
@@ -75,9 +75,13 @@ public User findUserByUid(@Param("uid") int uid);
     })
     public User queryUserById(int uid);
 
-    @Update("UPDATE  user SET  upwd = #{upwd} , uname = #{uname}  " +
+    @Update("UPDATE  user SET   uname = #{uname}  " +
             " WHERE uid = #{uid}")
     public boolean updateUser(User user);
+
+    @Update("UPDATE  user SET  upwd = #{upwd},salt=#{salt} " +
+            " WHERE uid = #{uid}")
+    public boolean resetPassword(User user);
 
     @Select("SELECT COUNT(*) FROM user")
     public int getTotalCount();
