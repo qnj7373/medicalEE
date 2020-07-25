@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wzxy.breeze.core.mapper.medicalMapper;
 import org.wzxy.breeze.core.model.po.HandleResult;
 import org.wzxy.breeze.core.model.po.medical;
@@ -54,6 +55,7 @@ public class MedicalServiceImpl implements IMedicalService {
 
     @Override
     @CacheEvict(cacheNames = "medicalZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult addMedical(medical m) {
         exist=medicalDao.isExist(m.getMedicalId());
         if(exist==0){
@@ -75,6 +77,7 @@ public class MedicalServiceImpl implements IMedicalService {
 
     @Override
     @CacheEvict(cacheNames = "medicalZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult updateMedical(medical m) {
         exist=medicalDao.isExist(m.getMedicalId());
         if(exist==1){
@@ -103,6 +106,7 @@ public class MedicalServiceImpl implements IMedicalService {
 
     @Override
     @CacheEvict(cacheNames = "medicalZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult deleteMedicalById(int medicalId) {
         exist=medicalDao.isExist(medicalId);
         if(exist==1){

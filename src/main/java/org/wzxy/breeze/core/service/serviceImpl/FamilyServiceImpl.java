@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wzxy.breeze.core.mapper.familyMapper;
 import org.wzxy.breeze.core.mapper.personMapper;
 import org.wzxy.breeze.core.model.dto.FamilyDto;
@@ -58,6 +59,7 @@ public class FamilyServiceImpl implements IFamilyService {
 
     @Override
     @CacheEvict(cacheNames = "familyZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult addFamily(FamilyDto familyDto) {
 
         exist=familyDao.isExist(familyDto.getFamicode());
@@ -87,6 +89,7 @@ public class FamilyServiceImpl implements IFamilyService {
 
     @Override
     @CacheEvict(cacheNames = "familyZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult deleteFamilyById(int  famicode){
         exist=familyDao.isExist(famicode);
         if(exist==1){
@@ -129,6 +132,7 @@ public class FamilyServiceImpl implements IFamilyService {
 
     @Override
     @CacheEvict(cacheNames = "familyZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult updateFamily(FamilyDto familyDto) {
         exist=familyDao.isExist(familyDto.getFamicode());
         if(exist==1){

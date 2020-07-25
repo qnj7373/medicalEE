@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wzxy.breeze.core.mapper.familyMapper;
 import org.wzxy.breeze.core.mapper.paymentMapper;
 import org.wzxy.breeze.core.mapper.personMapper;
@@ -61,6 +62,7 @@ public class PersonServiceImpl implements IPersonService {
 
     @Override
     @CacheEvict(cacheNames = "personZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult addPerson(PersonDto personDto) {
         exist=personDao.isExist(personDto.getPerscode());
         //户主、配偶家庭中只能有一位
@@ -115,6 +117,7 @@ public class PersonServiceImpl implements IPersonService {
 
     @Override
     @CacheEvict(cacheNames = "personZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult deletePersonById(int perscode) {
         exist=personDao.isExist(perscode);
         if(exist==1){
@@ -152,6 +155,7 @@ public class PersonServiceImpl implements IPersonService {
 
     @Override
     @CacheEvict(cacheNames = "personZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult updatePerson(PersonDto personDto) {
 
         exist=personDao.isExist(personDto.getPerscode());
@@ -249,7 +253,7 @@ public class PersonServiceImpl implements IPersonService {
         return personDtoList;
     }
 
-
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     private  void add(PersonDto personDto){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         personDto.setBirthday(dateFormat.format(personDto.getBirthTime()));
@@ -268,7 +272,7 @@ public class PersonServiceImpl implements IPersonService {
 
     }
 
-
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     private  void update(PersonDto personDto){
 
         if(personDto.getBirthTime()!=null){

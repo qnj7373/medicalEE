@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wzxy.breeze.core.model.po.HandleResult;
 import org.wzxy.breeze.core.model.po.payment;
 import org.wzxy.breeze.core.mapper.paymentMapper;
@@ -56,6 +57,7 @@ public class PaymentServiceImpl implements IPaymentService {
 
     @Override
     @CacheEvict(cacheNames = "paymentZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult addPayment(paymentDto payDto) {
         exist= payDao.isExist(payDto.getPaymentId());
         if (exist==0){
@@ -85,6 +87,7 @@ public class PaymentServiceImpl implements IPaymentService {
 
     @Override
     @CacheEvict(cacheNames = "paymentZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult deletePaymentById(int paymentId) {
 
         exist= payDao.isExist(paymentId);
@@ -109,6 +112,7 @@ public class PaymentServiceImpl implements IPaymentService {
 
     @Override
     @CacheEvict(cacheNames = "paymentZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult updatePayment(paymentDto payDto)
     {
         exist= payDao.isExist(payDto.getPaymentId());

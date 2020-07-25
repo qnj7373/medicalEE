@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wzxy.breeze.core.mapper.chronicdisMapper;
 import org.wzxy.breeze.core.model.dto.chronicdisDto;
 import org.wzxy.breeze.core.model.po.HandleResult;
@@ -61,6 +62,7 @@ public class chronicdisServiceImpl  implements IChronicdisService {
 
     @Override
     @CacheEvict(cacheNames = "chronicdisZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult addChronicdis(chronicdisDto chrDto) {
         exist=chronicdisDao.isExist(chrDto.getIllcode());
         if(exist==0){
@@ -84,6 +86,7 @@ public class chronicdisServiceImpl  implements IChronicdisService {
 
     @Override
     @CacheEvict(cacheNames = "chronicdisZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult updateChronicdis(chronicdisDto chrDto) {
         exist=chronicdisDao.isExist(chrDto.getIllcode());
         if(exist==1){
@@ -112,6 +115,7 @@ public class chronicdisServiceImpl  implements IChronicdisService {
 
     @Override
     @CacheEvict(cacheNames = "chronicdisZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult deleteChronicdisById(int illcode) {
         exist=chronicdisDao.isExist(illcode);
         if(exist==1){

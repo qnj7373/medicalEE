@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wzxy.breeze.core.mapper.menusMapper;
 import org.wzxy.breeze.core.mapper.userMapper;
 import org.wzxy.breeze.core.model.dto.MenuDto;
@@ -113,6 +114,7 @@ public class MenuServiceImpl  implements IMenuService {
 
     @Override
     @CacheEvict(cacheNames = "menuZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult addMenu(MenuDto menuDto) {
         String mPid = menuDto.getMenuPid();
         StringBuffer temp=new StringBuffer();
@@ -154,6 +156,7 @@ public class MenuServiceImpl  implements IMenuService {
 
     @Override
     @CacheEvict(cacheNames = "menuZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult updateMenu(MenuDto menuDto) {
        exist=menuDao.isExist(menuDto.getMenuId());
         if(exist==1){
@@ -190,6 +193,7 @@ public class MenuServiceImpl  implements IMenuService {
 
     @Override
     @CacheEvict(cacheNames = "menuZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult deleteMenuById(String menuId) {
         exist=menuDao.isExist(menuId);
         if(exist==1){

@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wzxy.breeze.common.utils.MedicalStringUtils;
 import org.wzxy.breeze.common.utils.PwdEncryption;
 import org.wzxy.breeze.core.model.po.HandleResult;
@@ -61,6 +62,7 @@ public class UserServiceImpl  implements IUserService {
 	@Override
 	@Caching(evict={@CacheEvict(value = "userZone", allEntries = true),
 			@CacheEvict(value = "menuZone", allEntries = true)})
+	@Transactional(rollbackFor = {RuntimeException.class,Error.class})
 	public HandleResult deleteUserById(int uid) {
 
 		exist=userDao.isExist(uid);
@@ -107,6 +109,7 @@ public class UserServiceImpl  implements IUserService {
 	@Override
 	@Caching(evict={@CacheEvict(value = "userZone", allEntries = true),
 			@CacheEvict(value = "menuZone", allEntries = true)})
+	@Transactional(rollbackFor = {RuntimeException.class,Error.class})
 	public HandleResult updateUser(UserDto userdto)
 	{
 
@@ -150,6 +153,7 @@ public class UserServiceImpl  implements IUserService {
 
 	@Override
 	@CacheEvict(cacheNames = "userZone",allEntries = true)
+	@Transactional(rollbackFor = {RuntimeException.class,Error.class})
 	public HandleResult resetPassword(UserDto userdto) {
 		exist=userDao.isExist(userdto.getUid());
 		if (exist==1){
@@ -206,6 +210,7 @@ public class UserServiceImpl  implements IUserService {
 
 	@Override
 	@CacheEvict(cacheNames = "userZone",allEntries = true)
+	@Transactional(rollbackFor = {RuntimeException.class,Error.class})
 	public HandleResult addUser(UserDto userdto) {
 		exist=userDao.isExist(userdto.getUid());
 		if (exist==0){

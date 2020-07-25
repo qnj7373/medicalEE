@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wzxy.breeze.core.mapper.organizationMapper;
 import org.wzxy.breeze.core.mapper.userMapper;
 import org.wzxy.breeze.core.model.dto.OrganizationDto;
@@ -61,6 +62,7 @@ public class OrganizationServiceImpl implements IOrganizationService {
 
     @Override
     @CacheEvict(cacheNames = "organizationZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult addOrgan(OrganizationDto organDto) {
 
         exist= organizationDao.isXZExist(organDto.getRegionId(), "2");
@@ -107,6 +109,7 @@ public class OrganizationServiceImpl implements IOrganizationService {
 
     @Override
     @CacheEvict(cacheNames = "organizationZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult updateOrgan(OrganizationDto organDto) {
         int tempReg = organizationDao.findOrganById(organDto.getAdministrationId()).getRegionId();
         if (organDto.getRegionId() == tempReg) {
@@ -127,6 +130,7 @@ public class OrganizationServiceImpl implements IOrganizationService {
 
     @Override
     @CacheEvict(cacheNames = "organizationZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult deleteOrganById(int Id)
     {
         exist= organizationDao.isExist(Id);
@@ -232,7 +236,7 @@ public class OrganizationServiceImpl implements IOrganizationService {
         return zTreeList;
     }
 
-
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     private HandleResult update(OrganizationDto organDto){
         exist = organizationDao.isExist(organDto.getAdministrationId());
         if (exist == 1) {

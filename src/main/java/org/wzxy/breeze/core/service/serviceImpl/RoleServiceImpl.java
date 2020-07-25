@@ -6,6 +6,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wzxy.breeze.core.mapper.menusMapper;
 import org.wzxy.breeze.core.mapper.rolesMapper;
 import org.wzxy.breeze.core.model.dto.RoleDto;
@@ -72,6 +73,7 @@ public class RoleServiceImpl  implements IRoleService {
     @Override
     @Caching(evict={@CacheEvict(value = "roleZone", allEntries = true),
             @CacheEvict(value = "menuZone", allEntries = true)})
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult addRole(RoleDto roledto) {
         role role = new role(roledto);
         exist=rolesDao.isExist(role.getRoleId());
@@ -99,6 +101,7 @@ public class RoleServiceImpl  implements IRoleService {
     @Override
     @Caching(evict={@CacheEvict(value = "roleZone", allEntries = true),
             @CacheEvict(value = "menuZone", allEntries = true)})
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult updateRole(RoleDto roledto) {
 
         exist=rolesDao.isExist(roledto.getRoleId());
@@ -133,6 +136,7 @@ public class RoleServiceImpl  implements IRoleService {
     @Override
     @Caching(evict={@CacheEvict(value = "roleZone", allEntries = true),
             @CacheEvict(value = "menuZone", allEntries = true)})
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult deleteRoleById(int roleId) {
         exist=rolesDao.isExist(roleId);
         if (exist==1){

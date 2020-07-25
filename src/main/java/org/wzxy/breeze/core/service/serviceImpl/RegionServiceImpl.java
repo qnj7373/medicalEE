@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wzxy.breeze.core.mapper.regionMapper;
 import org.wzxy.breeze.core.model.dto.RegionDto;
 import org.wzxy.breeze.core.model.po.HandleResult;
@@ -62,6 +63,7 @@ public class RegionServiceImpl  implements IRegionService {
 
     @Override
     @CacheEvict(cacheNames = "regionZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult addRegion(RegionDto regionDto) {
         exist= regionDao.isExist(regionDto.getRegionId());
         if (exist==0){
@@ -93,6 +95,7 @@ public class RegionServiceImpl  implements IRegionService {
 
     @Override
     @CacheEvict(cacheNames = "regionZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult updateRegion(RegionDto regionDto) {
         exist= regionDao.isExist(regionDto.getRegionId());
         if(exist==1){
@@ -123,6 +126,7 @@ public class RegionServiceImpl  implements IRegionService {
 
     @Override
     @CacheEvict(cacheNames = "regionZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult deleteRegionById(int regionId) {
         exist= regionDao.isExist(regionId);
         if(exist==1){

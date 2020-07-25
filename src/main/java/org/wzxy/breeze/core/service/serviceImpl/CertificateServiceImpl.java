@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wzxy.breeze.core.mapper.certificateMapper;
 import org.wzxy.breeze.core.mapper.personMapper;
 import org.wzxy.breeze.core.model.dto.certificateDto;
@@ -60,6 +61,7 @@ public class CertificateServiceImpl implements ICertificateService {
 
     @Override
     @CacheEvict(cacheNames = "certificateZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult addCert(certificateDto certDto,int regionId) {
 
         exist=certDao.isExist(certDto.getCertificateId());
@@ -113,6 +115,7 @@ public class CertificateServiceImpl implements ICertificateService {
 
     @Override
     @CacheEvict(cacheNames = "certificateZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult deleteCertById(int certificateId) {
         exist=certDao.isExist(certificateId);
         if(exist==1){
@@ -135,6 +138,7 @@ public class CertificateServiceImpl implements ICertificateService {
 
     @Override
     @CacheEvict(cacheNames = "certificateZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult updateCert(certificateDto certDto,int regionId) {
 
 

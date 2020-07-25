@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wzxy.breeze.core.model.po.HandleResult;
 import org.wzxy.breeze.core.model.po.expense;
 import org.wzxy.breeze.core.model.po.policy;
@@ -73,6 +74,7 @@ public class expenseServiceImpl implements IExpenseService {
 
     @Override
     @CacheEvict(cacheNames = "expenseZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult addExpense(expenseDto eDto, int administrationId) {
 
            exist=  expenseDao.isExist(eDto.getId());
@@ -146,12 +148,14 @@ public class expenseServiceImpl implements IExpenseService {
 
     @Override
     @CacheEvict(cacheNames = "expenseZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult updateExpense(expenseDto eDto) {
         return null;
     }
 
     @Override
     @CacheEvict(cacheNames = "expenseZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult updateExpenseState(expenseDto eDto) {
         exist=expenseDao.isExist(eDto.getId());
         if(exist==1){
@@ -179,6 +183,7 @@ public class expenseServiceImpl implements IExpenseService {
 
     @Override
     @CacheEvict(cacheNames = "expenseZone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult deleteExpenseById(int Id) {
 
         exist=  expenseDao.isExist(Id);

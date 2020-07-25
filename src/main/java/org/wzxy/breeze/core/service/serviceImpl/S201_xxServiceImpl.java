@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wzxy.breeze.core.mapper.s201_xxMapper;
 import org.wzxy.breeze.core.model.po.HandleResult;
 import org.wzxy.breeze.core.model.po.s201_xx;
@@ -54,6 +55,7 @@ public class S201_xxServiceImpl  implements IS201_xxService {
 
     @Override
     @CacheEvict(cacheNames = "s201Zone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult addS201_xx(s201_xx s ) {
         exist=s201_xxDao.isExist(s.getId(), s.getTable());
         if(exist==0){
@@ -76,6 +78,7 @@ public class S201_xxServiceImpl  implements IS201_xxService {
 
     @Override
     @CacheEvict(cacheNames = "s201Zone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult updateS201_xx(s201_xx s) {
         exist=s201_xxDao.isExist(s.getId(), s.getTable());
         if(exist==1){
@@ -101,6 +104,7 @@ public class S201_xxServiceImpl  implements IS201_xxService {
 
     @Override
     @CacheEvict(cacheNames = "s201Zone",allEntries = true)
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
     public HandleResult deleteS201_xxById(int id, String table) {
         exist=s201_xxDao.isExist(id, table);
         if(exist==1){
