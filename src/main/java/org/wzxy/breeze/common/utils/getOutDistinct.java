@@ -25,7 +25,6 @@ public class getOutDistinct {
             }
         }
         menuList.clear();
-        System.err.println(map.values());
         for (menu key : map.values()) {
             menuList.add(key);
         }

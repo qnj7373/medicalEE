@@ -8,10 +8,14 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.wzxy.breeze.common.model.entity.Encryption;
+import org.wzxy.breeze.common.shiro.filter.permissionFilter;
 
+import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -65,28 +69,51 @@ public class shiroConfig {
     }
 
     @Bean
+    public permissionFilter getPermissionFilter(){
+         return new permissionFilter();
+    }
+
+    @Bean
+    public FilterRegistrationBean registration(permissionFilter filter) {
+        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
+        registration.setEnabled(false);
+        return registration;
+    }
+
+    @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager){
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        shiroFilterFactoryBean.setSecurityManager(securityManager);
-        //未登录
-        shiroFilterFactoryBean.setLoginUrl("/system/notLogin");
-        Map<String,String> map = new LinkedHashMap<String, String>();
+        ShiroFilterFactoryBean shiroFilter= new ShiroFilterFactoryBean();
+        shiroFilter.setSecurityManager(securityManager);
+        //未登录(改用前后端分离),加入自定义的过滤器
+        Map<String, Filter> medicalFilter =  new HashMap<>();
+       // shiroFilterFactoryBean.setLoginUrl("/system/notLogin");
+        Map<String,String> filterMapLink = new LinkedHashMap<String, String>();
         //登录
-        map.put("/system/login", "anon");
+        filterMapLink.put("/system/login", "anon");
+        //登出
+        filterMapLink.put("/system/logout", "anon");
         //对静态资源放行
-        map.put("/images/**","anon");
-        map.put("/assets/**","anon");
-        map.put("/css/**","anon");
-        map.put("/js/**","anon");
-        map.put("/json/**","anon");
+        filterMapLink.put("/images/**","anon");
+        filterMapLink.put("/assets/**","anon");
+        filterMapLink.put("/css/**","anon");
+        filterMapLink.put("/js/**","anon");
+        filterMapLink.put("/json/**","anon");
         //退出
-        map.put("/logout", "logout");
-        //对所有用户认证
-       map.put("/**", "authc");
-        //错误页面，认证不通过跳转
-        shiroFilterFactoryBean.setUnauthorizedUrl("/error");
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
-         return  shiroFilterFactoryBean;
+        filterMapLink.put("/logout", "logout");
+        //对所有用户认证(改为自定义的过滤器)
+       //filterMapLink.put("/**", "authc");
+
+        //让filter仍然通过注入的方式让spring进行管理，同时又不会被spring默认注册
+        registration(getPermissionFilter());
+
+        medicalFilter.put("medicalAuth", getPermissionFilter());
+        shiroFilter.setFilters(medicalFilter);
+        filterMapLink.put("/**", "medicalAuth");
+
+        //错误页面，认证不通过跳转(改用前后端分离)
+       // shiroFilterFactoryBean.setUnauthorizedUrl("/error");
+        shiroFilter.setFilterChainDefinitionMap(filterMapLink);
+         return  shiroFilter;
     }
 
     //加入注解的使用，不加入这个注解不生效

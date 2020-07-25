@@ -15,6 +15,7 @@ import java.io.Serializable;
     OK(200),
     FAIL(201),
     ERROR(-1),
+    NOLOGIN(401),
     NOPERMSISSION(403);
 
     private int code;

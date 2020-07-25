@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.wzxy.breeze.common.utils.MedicalStringUtils;
 import org.wzxy.breeze.common.utils.PwdEncryption;
 import org.wzxy.breeze.core.model.po.HandleResult;
 import org.wzxy.breeze.core.model.po.User;
@@ -40,6 +42,8 @@ public class UserServiceImpl  implements IUserService {
 	private rolesMapper rolesDao;
 	@Autowired
 	private HandleResult handle ;
+	@Resource
+	private RedisTemplate<String,Object> redisTemplate;
 	private int exist=-1;
 
 	@Override
@@ -169,7 +173,36 @@ public class UserServiceImpl  implements IUserService {
 		}
 	}
 
+	@Override
+	public HandleResult userLogout(String token) {
+		if (!MedicalStringUtils.isNull(token)&&MedicalStringUtils.isBlank(token)){
+			redisTemplate.delete(token);
+			handle.setStatus(ResponseCode.OK.getCode());
+			handle.setMessage("退出登录成功!");
+		}else{
+			handle.setStatus(ResponseCode.FAIL.getCode());
+			handle.setMessage("退出登录失败!你还没有登录!");
+		}
+		return handle;
+	}
 
+	@Override
+	public boolean hasLogin(String loginUid) {
+		Long expire = redisTemplate.getExpire(loginUid);
+		if (expire>0){
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	@Override
+	public void exitUser(String loginUid) {
+		String token=redisTemplate.opsForValue().get(loginUid).toString();
+		redisTemplate.delete(token);
+		redisTemplate.delete(loginUid);
+		return;
+	}
 
 	@Override
 	@CacheEvict(cacheNames = "userZone",allEntries = true)

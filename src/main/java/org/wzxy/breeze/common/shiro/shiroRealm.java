@@ -32,7 +32,7 @@ public class shiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
       String userId = principalCollection.getPrimaryPrincipal().toString();
         User user=new User();
-        List<User> userList =new ArrayList<>();
+        List<User> userList ;
         user.setUid(Integer.parseInt(userId));
         userList=UserService.findUserByFactor(user);
         if(userList!=null){
@@ -58,10 +58,9 @@ public class shiroRealm extends AuthorizingRealm {
             return  null;
         }
         String id = authenticationToken.getPrincipal().toString();
-        String pwd = new String((char[]) authenticationToken.getCredentials());
         //User容器
         User user = new User();
-        List<User> userList = new ArrayList<>();
+        List<User> userList;
         user.setUid(Integer.parseInt(id));
         userList = UserService.findUserByFactor(user);
         if (userList.size()==0){
@@ -69,7 +68,6 @@ public class shiroRealm extends AuthorizingRealm {
             throw  new AccountException("用户不存在！");
         }else{
             user=userList.get(0);
-
             SimpleAuthenticationInfo simpleAuthenticationInfo =
                     new SimpleAuthenticationInfo
                     (

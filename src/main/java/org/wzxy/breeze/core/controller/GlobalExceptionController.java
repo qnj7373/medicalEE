@@ -56,7 +56,7 @@ public class GlobalExceptionController {
             return Result;
         }else {
             //其他异常
-            logger.error("出错了! "+e.getMessage());
+            logger.error("服务异常!!! "+e.getMessage());
             Result.setData(null);
             Result.setStatus(ResponseCode.ERROR.getCode());
             Result.setMessage("服务器出错了！请联系管理员处理~");

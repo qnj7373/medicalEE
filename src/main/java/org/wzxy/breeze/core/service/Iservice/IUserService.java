@@ -18,6 +18,12 @@ public interface IUserService {
 
    public HandleResult resetPassword(UserDto userdto) ;
 
+   public HandleResult userLogout(String token) ;
+
+   public boolean hasLogin(String loginUid) ;
+
+   public void exitUser(String loginUid) ;
+
    public HandleResult addUser(UserDto userdto) ;
 
    public Page<UserDto> UserPaging(int nowPage, int pageSize) ;
